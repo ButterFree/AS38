@@ -53,7 +53,6 @@
     <Compile Include="BenchmarkSystemTest.cs" />
     <Compile Include="JobEventArgsTest.cs" />
     <Compile Include="JobTest.cs" />
-    <Compile Include="LoggerTest.cs" />
     <Compile Include="OwnerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchedulerTest.cs" />
