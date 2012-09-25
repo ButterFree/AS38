@@ -11,13 +11,16 @@ namespace ConsoleSimulation
         static void Main(string[] args) {
             Owner me = new Owner("Test");
             BenchmarkSystem.BenchmarkSystem system = BenchmarkSystem.BenchmarkSystem.instance;
+            Logger logger = new Logger(system);
             for (int i = 0; i < 100; i++) {
                 Job job = new Job(me, 2, 1);
                 job.process = (a) => "Job" + i + " runs and runs";
                 system.Submit(job);
             }
             system.Status();
+            Console.WriteLine("Executing all:");
             system.ExecuteAll();
+            Console.Read();
         }
     }
 }

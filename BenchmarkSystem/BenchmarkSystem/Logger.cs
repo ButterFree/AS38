@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BenchmarkSystem
 {
-    class Logger
+    public class Logger
     {
         public Logger(BenchmarkSystem benchmarkSystem)
         {

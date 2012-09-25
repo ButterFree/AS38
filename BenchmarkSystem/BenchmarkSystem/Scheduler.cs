@@ -32,10 +32,12 @@ namespace BenchmarkSystem {
       Job jobToRun = null;
       IList<Job> inList = null;
       foreach (IList<Job> list in jobs.Values) {
-        if (jobToRun == null || (list.Count > 0 && list[0].timestamp < jobToRun.timestamp)) {
-          jobToRun = list[0];
-          inList = list;
-        }
+          if (list.Count > 0) {
+              if (jobToRun == null || list[0].timestamp < jobToRun.timestamp) {
+                  jobToRun = list[0];
+                  inList = list;
+              }
+          }
       }
       if (inList != null) inList.RemoveAt(0);
       return jobToRun;
