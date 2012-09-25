@@ -19,6 +19,8 @@ namespace BenchmarkSystem {
     }
 
     public void AddJob(Job job) {
+      job.SetTimestamp();
+      job.State = JobState.Queued;
       jobs[GetJobType(job)].Add(job);
     }
 
@@ -28,9 +30,14 @@ namespace BenchmarkSystem {
 
     public Job PopJob() {
       Job jobToRun = null;
+      IList<Job> inList = null;
       foreach (IList<Job> list in jobs.Values) {
-        if (jobToRun == null || list[0].timestamp < jobToRun.timestamp) jobToRun = list[0];
+        if (jobToRun == null || list[0].timestamp < jobToRun.timestamp) {
+          jobToRun = list[0];
+          inList = list;
+        }
       }
+      if (inList != null) inList.RemoveAt(0);
       return jobToRun;
     }
 
@@ -42,6 +49,17 @@ namespace BenchmarkSystem {
       } else {
         return JobType.VeryLong;
       }
+    }
+
+    public string ToString() {
+      StringBuilder str = new StringBuilder();
+      foreach (IList<Job> list in jobs.Values) {
+        str.AppendLine(GetJobType(list[0])+": "+list.Count+" jobs");
+        foreach(Job job in list) {
+          str.AppendLine(job.ToString());
+        }
+      }
+      return str.ToString();
     }
   }
 }

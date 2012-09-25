@@ -22,22 +22,40 @@ namespace BenchmarkSystem {
     }
 
     public void Submit(Job job) {
-      job.SetTimestamp();
-      OnJobSubmitted(job);
       scheduler.AddJob(job);
+      OnJobSubmitted(job);
     }
 
     public void Cancel(Job job) {
-      OnJobCancelled(job);
       scheduler.RemoveJob(job);
+      OnJobCancelled(job);
     }
 
-    public IList<Job> Status() {
-      throw new NotImplementedException();
+    public string Status() {
+      StringBuilder str = new StringBuilder();
+      foreach (Scheduler.JobType type in running.Keys) {
+        str.AppendLine(type+": "+running[type]+"/20 running");
+      }
+      return str.ToString();
     }
 
     public void ExecuteAll() {
-      throw new NotImplementedException();
+      Job nextJob = null;
+      while((nextJob = scheduler.PopJob()) != null) {
+        string[] args = { "" };
+        nextJob.State = JobState.Running;
+        running[Scheduler.GetJobType(nextJob)]++;
+        OnJobRunning(nextJob);
+        try {
+          nextJob.process(args);
+          nextJob.State = JobState.Succesfull;
+          OnJobTerminated(nextJob);
+        } catch (Exception e) {
+          nextJob.State = JobState.Failed;
+          OnJobFailed(nextJob);
+        }
+        running[Scheduler.GetJobType(nextJob)]--;
+      }
     }
 
     #region EventFunctions
