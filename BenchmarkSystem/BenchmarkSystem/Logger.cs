@@ -5,6 +5,10 @@ using System.Text;
 
 namespace BenchmarkSystemNs
 {
+    /// <summary>
+    /// Logger uses Events to log.
+    /// Logger simply writes to console.
+    /// </summary>
     public class Logger
     {
         public Logger(BenchmarkSystem benchmarkSystem)

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace BenchmarkSystemNs
 {
+    /// <summary>
+    /// Owner describes the owner of a Job.
+    /// </summary>
     public class Owner
     {
         public Owner(string Name) {
