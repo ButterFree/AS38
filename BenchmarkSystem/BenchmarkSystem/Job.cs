@@ -39,7 +39,7 @@ namespace BenchmarkSystem {
 
     public long timestamp {
       private set;
-      public get;
+      get;
     }
     public void SetTimestamp() {
       timestamp = System.DateTime.Now.Millisecond;
