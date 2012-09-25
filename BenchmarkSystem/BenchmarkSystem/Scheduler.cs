@@ -58,17 +58,27 @@ namespace BenchmarkSystemNs {
       Job jobToRun = null;
       IList<Job> inList = null;
       foreach (IList<Job> list in jobs.Values) {
+        // if list not empty
           if (list.Count > 0) {
+            // if the next job was queued before jobToRun
               if (jobToRun == null || list[0].timestamp < jobToRun.timestamp) {
                   jobToRun = list[0];
                   inList = list;
               }
           }
       }
+      // Following will be false, if queues are empty
       if (inList != null) inList.RemoveAt(0);
       return jobToRun;
     }
 
+    /// <summary>
+    /// Identify the JobType.
+    /// This is used to add the job to the correct queue.
+    /// </summary>
+    /// <see cref="BenchmarkSystemNs.Scheduler.JobType"/>
+    /// <param name="job">Job</param>
+    /// <returns>JobType</returns>
     public static JobType GetJobType(Job job) {
       if (job.ExpectedRuntime < 30) {
         return JobType.Short;
@@ -79,6 +89,11 @@ namespace BenchmarkSystemNs {
       }
     }
 
+    /// <summary>
+    /// Returns the state of each job as a string.
+    /// This is used by BenchmarkSystem.Status()
+    /// </summary>
+    /// <returns>String</returns>
     public override string ToString() {
       StringBuilder str = new StringBuilder();
       foreach (IList<Job> list in jobs.Values) {

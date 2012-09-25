@@ -28,6 +28,7 @@ namespace BenchmarkSystemNs {
     private BenchmarkSystem() {
       scheduler = new Scheduler();
       // Add events
+      // These are used to keep track of number of jobs running
       JobStarted += new EventHandler<JobEventArgs>(benchmarkSystem_start);
       JobTerminated += new EventHandler<JobEventArgs>(benchmarkSystem_end);
       JobFailed += new EventHandler<JobEventArgs>(benchmarkSystem_end);
@@ -120,10 +121,12 @@ namespace BenchmarkSystemNs {
     }
     #endregion
 
+    // These are used to keep track of number of jobs running
     void benchmarkSystem_start(object sender, JobEventArgs e) {
       running[Scheduler.GetJobType(e.job)]++;
     }
 
+    // These are used to keep track of number of jobs running
     void benchmarkSystem_end(object sender, JobEventArgs e) {
       running[Scheduler.GetJobType(e.job)]--;
     }
