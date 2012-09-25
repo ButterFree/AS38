@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BenchmarkSystem {
+namespace BenchmarkSystemNs {
   public sealed class BenchmarkSystem {
     public event EventHandler<JobEventArgs> JobQueued;
     public event EventHandler<JobEventArgs> JobRemoved;

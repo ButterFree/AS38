@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BenchmarkSystem {
+namespace BenchmarkSystemNs {
   class Scheduler {
     public enum JobType {
       Short,
       Long,
       VeryLong
     }
-    Dictionary<JobType, IList<Job>> jobs = new Dictionary<JobType, IList<Job>>();
+    private Dictionary<JobType, IList<Job>> jobs = new Dictionary<JobType, IList<Job>>();
 
     public Scheduler() {
       foreach (JobType type in Enum.GetValues(typeof(JobType))) {

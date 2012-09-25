@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BenchmarkSystem {
+namespace BenchmarkSystemNs {
   public class Job {
     /// <summary>
     /// Constructor for Job
