@@ -65,12 +65,14 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void SetTimestampTest() {
-      Owner owner = null; // TODO: Initialize to an appropriate value
-      byte CPU = 0; // TODO: Initialize to an appropriate value
-      int ExpectedRuntime = 0; // TODO: Initialize to an appropriate value
-      Job target = new Job(owner, CPU, ExpectedRuntime); // TODO: Initialize to an appropriate value
+      Owner owner = null;
+      byte CPU = 0; 
+      int ExpectedRuntime = 0; 
+      Job target = new Job(owner, CPU, ExpectedRuntime); 
       target.SetTimestamp();
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+      long time = System.DateTime.Now.Millisecond;
+      long dif = time - target.timestamp;
+      Assert.IsTrue(dif < 10);
     }
 
     /// <summary>
@@ -78,11 +80,13 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void JobConstructorTest() {
-      Owner owner = null; // TODO: Initialize to an appropriate value
-      byte CPU = 0; // TODO: Initialize to an appropriate value
-      int ExpectedRuntime = 0; // TODO: Initialize to an appropriate value
+      Owner owner = new Owner("Test owner");
+      byte CPU = 3;
+      int ExpectedRuntime = 42; 
       Job target = new Job(owner, CPU, ExpectedRuntime);
-      Assert.Inconclusive("TODO: Implement code to verify target");
+      Assert.AreEqual(owner, target.owner);
+      Assert.AreEqual(CPU, target.CPU);
+      Assert.AreEqual(ExpectedRuntime, target.ExpectedRuntime);
     }
 
     /// <summary>

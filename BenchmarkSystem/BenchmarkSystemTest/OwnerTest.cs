@@ -65,9 +65,9 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void OwnerConstructorTest() {
-      string Name = string.Empty; // TODO: Initialize to an appropriate value
+      string Name = "Test owner";
       Owner target = new Owner(Name);
-      Assert.Inconclusive("TODO: Implement code to verify target");
+      Assert.AreEqual(Name, target.Name);
     }
 
     /// <summary>
@@ -75,14 +75,13 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void NameTest() {
-      string Name = string.Empty; // TODO: Initialize to an appropriate value
-      Owner target = new Owner(Name); // TODO: Initialize to an appropriate value
-      string expected = string.Empty; // TODO: Initialize to an appropriate value
+      string Name = "Test owner";
+      Owner target = new Owner(Name);
+      string expected = "Owner";
       string actual;
       target.Name = expected;
       actual = target.Name;
       Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
     }
   }
 }
