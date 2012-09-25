@@ -44,7 +44,7 @@ namespace BenchmarkSystem {
     public void SetTimestamp() {
       timestamp = System.DateTime.Now.Millisecond;
     }
-    public string ToString() {
+    public override string ToString() {
       return "("+timestamp+")Job: [owner="+owner.Name+",CPU="+CPU+"ExpectedRuntime="+ExpectedRuntime+"] - "+State;
     }
   }

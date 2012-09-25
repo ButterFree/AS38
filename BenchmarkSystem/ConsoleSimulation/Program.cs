@@ -16,6 +16,7 @@ namespace ConsoleSimulation
                 job.process = (a) => "Job" + i + " runs and runs";
                 system.Submit(job);
             }
+            system.Status();
             system.ExecuteAll();
         }
     }
