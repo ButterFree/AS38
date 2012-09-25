@@ -82,10 +82,12 @@ namespace BenchmarkSystemNs {
     public override string ToString() {
       StringBuilder str = new StringBuilder();
       foreach (IList<Job> list in jobs.Values) {
-        str.AppendLine(GetJobType(list[0])+": "+list.Count+" jobs");
-        foreach(Job job in list) {
-          str.AppendLine(job.ToString());
-        }
+          if (list.Count > 0) {
+              str.AppendLine(GetJobType(list[0]) + ": " + list.Count + " jobs");
+              foreach (Job job in list) {
+                  str.AppendLine(job.ToString());
+              }
+          }
       }
       return str.ToString();
     }

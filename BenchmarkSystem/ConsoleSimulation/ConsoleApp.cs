@@ -6,7 +6,7 @@ using BenchmarkSystemNs;
 
 namespace ConsoleSimulation
 {
-    class Program
+    class ConsoleApp
     {
         static void Main(string[] args) {
             Owner me = new Owner("Test");
