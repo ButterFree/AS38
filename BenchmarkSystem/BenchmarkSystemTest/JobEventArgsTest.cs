@@ -15,6 +15,7 @@ namespace BenchmarkSystemTest
 
 
     private TestContext testContextInstance;
+    private Owner owner = new Owner("Testuser");
 
     /// <summary>
     ///Gets or sets the test context which provides
@@ -65,25 +66,9 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void JobEventArgsConstructorTest() {
-      Job job = null; // TODO: Initialize to an appropriate value
+      Job job = new Job(owner, 3, 986);
       JobEventArgs target = new JobEventArgs(job);
-      Assert.Inconclusive("TODO: Implement code to verify target");
-    }
-
-    /// <summary>
-    ///A test for job
-    ///</summary>
-    [TestMethod()]
-    [DeploymentItem("BenchmarkSystem.dll")]
-    public void jobTest() {
-      PrivateObject param0 = null; // TODO: Initialize to an appropriate value
-      JobEventArgs_Accessor target = new JobEventArgs_Accessor(param0); // TODO: Initialize to an appropriate value
-      Job expected = null; // TODO: Initialize to an appropriate value
-      Job actual;
-      target.job = expected;
-      actual = target.job;
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
+      Assert.AreSame(job, target.job);
     }
   }
 }
