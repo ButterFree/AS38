@@ -73,16 +73,12 @@ namespace BenchmarkSystem {
     public void SetTimestamp() {
       timestamp = System.DateTime.Now.Millisecond;
     }
-<<<<<<< HEAD
 
     /// <summary>
     /// Prints: Timestamp, owner, number of CPUs, expected runtime, state.
     /// </summary>
     /// <returns>String descriping this job</returns>
-    public string ToString() {
-=======
     public override string ToString() {
->>>>>>> 659ca1bfb39e2c927e6dc32d9519071ebd532451
       return "("+timestamp+")Job: [owner="+owner.Name+",CPU="+CPU+"ExpectedRuntime="+ExpectedRuntime+"] - "+State;
     }
   }
