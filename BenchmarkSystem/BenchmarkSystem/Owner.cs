@@ -7,6 +7,10 @@ namespace BenchmarkSystem
 {
     public class Owner
     {
+        public Owner(string Name) {
+            this.Name = Name;
+        }
+
         public string Name
         {
             get;

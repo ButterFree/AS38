@@ -32,7 +32,7 @@ namespace BenchmarkSystem {
       Job jobToRun = null;
       IList<Job> inList = null;
       foreach (IList<Job> list in jobs.Values) {
-        if (jobToRun == null || list[0].timestamp < jobToRun.timestamp) {
+        if (jobToRun == null || (list.Count > 0 && list[0].timestamp < jobToRun.timestamp)) {
           jobToRun = list[0];
           inList = list;
         }
@@ -51,7 +51,7 @@ namespace BenchmarkSystem {
       }
     }
 
-    public string ToString() {
+    public override string ToString() {
       StringBuilder str = new StringBuilder();
       foreach (IList<Job> list in jobs.Values) {
         str.AppendLine(GetJobType(list[0])+": "+list.Count+" jobs");

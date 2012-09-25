@@ -19,6 +19,10 @@ namespace BenchmarkSystem {
       JobStarted += new EventHandler<JobEventArgs>(benchmarkSystem_start);
       JobTerminated += new EventHandler<JobEventArgs>(benchmarkSystem_end);
       JobFailed += new EventHandler<JobEventArgs>(benchmarkSystem_end);
+
+      foreach (Scheduler.JobType type in Enum.GetValues(typeof(Scheduler.JobType))) {
+          running.Add(type, 0);
+      }
     }
 
     public void Submit(Job job) {
