@@ -1,6 +1,7 @@
 ﻿using BenchmarkSystemNs;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace BenchmarkSystemTest
 {
@@ -15,6 +16,7 @@ namespace BenchmarkSystemTest
 
 
     private TestContext testContextInstance;
+    private Owner owner = new Owner("Testuser");
 
     /// <summary>
     ///Gets or sets the test context which provides
@@ -59,26 +61,16 @@ namespace BenchmarkSystemTest
     //
     #endregion
 
-
-    /// <summary>
-    ///A test for Scheduler Constructor
-    ///</summary>
-    [TestMethod()]
-    public void SchedulerConstructorTest() {
-      Scheduler target = new Scheduler();
-      Scheduler_Accessor targetAccess = new Scheduler_Accessor();
-      Assert.AreEqual(targetAccess.jobs.Count, Enum.GetValues(typeof(Scheduler.JobType)).Length);
-    }
-
     /// <summary>
     ///A test for AddJob
     ///</summary>
     [TestMethod()]
     public void AddJobTest() {
-      Scheduler target = new Scheduler(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
+      Scheduler target = new Scheduler();
+      Job job = new Job(owner, 6, 100);
       target.AddJob(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+      Job job2 = target.PopJob();
+      Assert.AreSame(job, job2);
     }
 
     /// <summary>
@@ -86,12 +78,27 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void GetJobTypeTest() {
-      Job job = null; // TODO: Initialize to an appropriate value
-      Scheduler.JobType expected = new Scheduler.JobType(); // TODO: Initialize to an appropriate value
-      Scheduler.JobType actual;
-      actual = Scheduler.GetJobType(job);
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
+      Dictionary<Job, Scheduler.JobType> testCases = new Dictionary<Job, Scheduler.JobType>();
+      testCases.Add(new Job(owner, 6, 1), Scheduler.JobType.Short);
+      testCases.Add(new Job(owner, 6, 29), Scheduler.JobType.Short);
+      testCases.Add(new Job(owner, 6, 30), Scheduler.JobType.Long);
+      testCases.Add(new Job(owner, 6, 119), Scheduler.JobType.Long);
+      testCases.Add(new Job(owner, 6, 120), Scheduler.JobType.VeryLong);
+      testCases.Add(new Job(owner, 6, int.MaxValue), Scheduler.JobType.VeryLong);
+      foreach (Job test in testCases.Keys) {
+        Scheduler.JobType actual = Scheduler.GetJobType(test);
+        Assert.AreEqual(testCases[test], actual);
+      }
+    }
+
+    /// <summary>
+    /// Testing negative runtime values for GetJobType
+    /// </summary>
+    [TestMethod]
+    [ExpectedException(typeof(ArgumentOutOfRangeException))]
+    public void GetJobTypeNegativeTest() {
+      Job test = new Job(owner, 6, -1);
+      Scheduler.JobType jobType = Scheduler.GetJobType(test);
     }
 
     /// <summary>
@@ -99,12 +106,16 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void PopJobTest() {
-      Scheduler target = new Scheduler(); // TODO: Initialize to an appropriate value
-      Job expected = null; // TODO: Initialize to an appropriate value
-      Job actual;
-      actual = target.PopJob();
+      Job job1 = new Job(owner, 6, 100);
+      Job job2 = new Job(owner, 1, 26);
+      Scheduler target = new Scheduler();
+      target.AddJob(job1);
+      System.Threading.Thread.Sleep(1);
+      target.AddJob(job2);
+
+      Job expected = job1;
+      Job actual = target.PopJob();
       Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
     }
 
     /// <summary>
@@ -112,10 +123,11 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void RemoveJobTest() {
-      Scheduler target = new Scheduler(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
+      Scheduler target = new Scheduler();
+      Job job = new Job(owner, 4, 23);
+      target.AddJob(job);
       target.RemoveJob(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+      Assert.IsNull(target.PopJob());
     }
 
     /// <summary>
@@ -123,12 +135,10 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void ToStringTest() {
-      Scheduler target = new Scheduler(); // TODO: Initialize to an appropriate value
-      string expected = string.Empty; // TODO: Initialize to an appropriate value
-      string actual;
-      actual = target.ToString();
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
+      Scheduler target = new Scheduler();
+      Job job1 = new Job(owner, 3, 12);
+      Job job2 = new Job(owner, 6, 11);
+      Assert.IsInstanceOfType(target.ToString(), typeof(string));
     }
   }
 }
