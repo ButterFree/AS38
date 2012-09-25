@@ -44,6 +44,7 @@ namespace BenchmarkSystemNs {
     }
 
     public static JobType GetJobType(Job job) {
+      if (job.ExpectedRuntime < 0) throw new ArgumentOutOfRangeException("Negative expected runtime");
       if (job.ExpectedRuntime < 30) {
         return JobType.Short;
       } else if (job.ExpectedRuntime >= 30 && job.ExpectedRuntime < 120) {
@@ -55,9 +56,9 @@ namespace BenchmarkSystemNs {
 
     public override string ToString() {
       StringBuilder str = new StringBuilder();
-      foreach (IList<Job> list in jobs.Values) {
-        str.AppendLine(GetJobType(list[0])+": "+list.Count+" jobs");
-        foreach(Job job in list) {
+      foreach (JobType type in jobs.Keys) {
+        str.AppendLine(type+": "+jobs[type].Count+" jobs");
+        foreach(Job job in jobs[type]) {
           str.AppendLine(job.ToString());
         }
       }
