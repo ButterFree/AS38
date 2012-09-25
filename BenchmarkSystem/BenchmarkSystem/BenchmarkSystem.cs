@@ -119,5 +119,13 @@ namespace BenchmarkSystemNs {
         JobFailed(this, new JobEventArgs(job));
     }
     #endregion
+
+    void benchmarkSystem_start(object sender, JobEventArgs e) {
+      running[Scheduler.GetJobType(e.job)]++;
+    }
+
+    void benchmarkSystem_end(object sender, JobEventArgs e) {
+      running[Scheduler.GetJobType(e.job)]--;
+    }
   }
 }
