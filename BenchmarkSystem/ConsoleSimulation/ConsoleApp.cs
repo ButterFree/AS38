@@ -10,13 +10,13 @@ namespace ConsoleSimulation
     {
         static void Main(string[] args) {
             Owner me = new Owner("Test");
-            BenchmarkSystemNs.BenchmarkSystem system = BenchmarkSystemNs.BenchmarkSystem.instance;
+            BenchmarkSystem system = BenchmarkSystem.instance;
             //Logger logger = new Logger(system);
             for (int i = 0; i < 100; i++) {
                 Job job = new Job(me, 2, 1);
                 job.process = (a) =>
                 {
-                    Console.WriteLine("");
+                    Console.WriteLine("Job runs and runs");
                     return "";
                 };
                 system.Submit(job);
