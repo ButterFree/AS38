@@ -66,6 +66,7 @@ namespace BenchmarkSystemNs {
       foreach (Scheduler.JobType type in running.Keys) {
         str.AppendLine(type+": "+running[type]+"/20 running");
       }
+      str.AppendLine(scheduler.ToString());
       return str.ToString();
     }
 
