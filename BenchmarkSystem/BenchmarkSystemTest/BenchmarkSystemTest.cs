@@ -296,7 +296,6 @@ namespace BenchmarkSystemTest
         target.Remove(jobs[i]);
         Assert.IsFalse(target.Contains(jobs[i]));
       }
-
     }
 
     /// <summary>
@@ -305,6 +304,8 @@ namespace BenchmarkSystemTest
     [TestMethod()]
     public void TotalNumberOfJobsTest() {
       BenchmarkSystem target = BenchmarkSystem.instance;
+      // Empty queues
+      target.ExecuteAll();
 
       // Add jobs and assert
       uint max = 10;
