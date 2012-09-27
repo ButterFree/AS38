@@ -2,12 +2,11 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace BenchmarkSystemTest
-{   
-    /// <summary>
-    ///This is a test class for BenchmarkSystemTest and is intended
-    ///to contain all BenchmarkSystemTest Unit Tests
-    ///</summary>
+namespace BenchmarkSystemTest {
+  /// <summary>
+  ///This is a test class for BenchmarkSystemTest and is intended
+  ///to contain all BenchmarkSystemTest Unit Tests
+  ///</summary>
   [TestClass()]
   public class BenchmarkSystemTest {
     bool EventCalledBool = false;
@@ -118,7 +117,7 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobFailed += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      target.OnJobFailed(job,new Exception("Test exception"));
+      target.OnJobFailed(job, new Exception("Test exception"));
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobFailed, eventType);
       EventCalledBool = false;
@@ -265,8 +264,8 @@ namespace BenchmarkSystemTest
       Job job = new Job(null, 1, 1);
       job.process = (a) => {
         throw new Exception("Test exception");
-                  return "";
-                };
+        return "";
+      };
       target.Submit(job);
       target.ExecuteAll();
       Assert.IsTrue(EventCalledBool);
@@ -281,13 +280,13 @@ namespace BenchmarkSystemTest
     [TestMethod()]
     public void ContainsTest() {
       BenchmarkSystem target = BenchmarkSystem.instance;
-      
+
       // Add jobs and assert
       uint max = 10;
       Job[] jobs = new Job[max];
       for (uint i = 1; i <= max; i++) {
         Job job = new Job(null, 1, i);
-        jobs[i-1] = job;
+        jobs[i - 1] = job;
         target.Submit(job);
         Assert.IsTrue(target.Contains(job));
       }
@@ -313,13 +312,13 @@ namespace BenchmarkSystemTest
       Assert.AreEqual((uint)0, target.TotalNumberOfJobs());
       for (uint i = 1; i <= max; i++) {
         Job job = new Job(null, 1, i);
-        jobs[i-1] = job;
+        jobs[i - 1] = job;
         target.Submit(job);
         Assert.AreEqual(i, target.TotalNumberOfJobs());
       }
 
       // Remove jobs and assert
-      for (uint i = max-1; i > 0; i--) {
+      for (uint i = max - 1; i > 0; i--) {
         target.Remove(jobs[i]);
         Assert.AreEqual(i, target.TotalNumberOfJobs());
       }

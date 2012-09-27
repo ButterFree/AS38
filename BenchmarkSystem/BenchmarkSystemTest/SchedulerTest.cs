@@ -3,14 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace BenchmarkSystemTest
-{
-    
-    
-    /// <summary>
-    ///This is a test class for SchedulerTest and is intended
-    ///to contain all SchedulerTest Unit Tests
-    ///</summary>
+namespace BenchmarkSystemTest {
+
+
+  /// <summary>
+  ///This is a test class for SchedulerTest and is intended
+  ///to contain all SchedulerTest Unit Tests
+  ///</summary>
   [TestClass()]
   public class SchedulerTest {
 

@@ -8,7 +8,7 @@ namespace BenchmarkSystemNs {
   /// Scheduler holds the job queues.
   /// </summary>
   class Scheduler {
-    
+
     /// <summary>
     /// JobType is used to descripe the queue and the jobs within the queue.
     /// </summary>
@@ -59,13 +59,13 @@ namespace BenchmarkSystemNs {
       IList<Job> inList = null;
       foreach (IList<Job> list in jobs.Values) {
         // if list not empty
-          if (list.Count > 0) {
-            // if the next job was queued before jobToRun
-              if (jobToRun == null || list[0].timestamp < jobToRun.timestamp) {
-                  jobToRun = list[0];
-                  inList = list;
-              }
+        if (list.Count > 0) {
+          // if the next job was queued before jobToRun
+          if (jobToRun == null || list[0].timestamp < jobToRun.timestamp) {
+            jobToRun = list[0];
+            inList = list;
           }
+        }
       }
       // Following will be false, if queues are empty
       if (inList != null) inList.RemoveAt(0);
@@ -97,8 +97,8 @@ namespace BenchmarkSystemNs {
     public override string ToString() {
       StringBuilder str = new StringBuilder();
       foreach (JobType type in jobs.Keys) {
-        str.AppendLine(type+": "+jobs[type].Count+" jobs");
-        foreach(Job job in jobs[type]) {
+        str.AppendLine(type + ": " + jobs[type].Count + " jobs");
+        foreach (Job job in jobs[type]) {
           str.AppendLine(job.ToString());
         }
       }

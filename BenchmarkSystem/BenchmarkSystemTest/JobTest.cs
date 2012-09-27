@@ -2,14 +2,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace BenchmarkSystemTest
-{
-    
-    
-    /// <summary>
-    ///This is a test class for JobTest and is intended
-    ///to contain all JobTest Unit Tests
-    ///</summary>
+namespace BenchmarkSystemTest {
+
+
+  /// <summary>
+  ///This is a test class for JobTest and is intended
+  ///to contain all JobTest Unit Tests
+  ///</summary>
   [TestClass()]
   public class JobTest {
 
@@ -66,9 +65,9 @@ namespace BenchmarkSystemTest
     [TestMethod()]
     public void SetTimestampTest() {
       Owner owner = null;
-      byte CPU = 1; 
-      uint ExpectedRuntime = 0; 
-      Job target = new Job(owner, CPU, ExpectedRuntime); 
+      byte CPU = 1;
+      uint ExpectedRuntime = 0;
+      Job target = new Job(owner, CPU, ExpectedRuntime);
       target.SetTimestamp();
       long time = System.DateTime.Now.Millisecond;
       long dif = time - target.timestamp;
@@ -82,7 +81,7 @@ namespace BenchmarkSystemTest
     public void JobConstructorTest() {
       Owner owner = new Owner("Test owner");
       byte CPU = 3;
-     uint ExpectedRuntime = 42; 
+      uint ExpectedRuntime = 42;
       Job target = new Job(owner, CPU, ExpectedRuntime);
       Assert.AreEqual(owner, target.owner);
       Assert.AreEqual(CPU, target.CPU);
@@ -96,8 +95,8 @@ namespace BenchmarkSystemTest
     public void ToStringTest() {
       Owner owner = new Owner("Test owner");
       byte CPU = 3;
-     uint ExpectedRuntime = 42;
-      Job target = new Job(owner, CPU, ExpectedRuntime); 
+      uint ExpectedRuntime = 42;
+      Job target = new Job(owner, CPU, ExpectedRuntime);
       string actual = target.ToString();
       Assert.IsTrue(target.ToString().Contains(owner.Name));
       Assert.IsTrue(target.ToString().Contains("42"));
@@ -112,9 +111,9 @@ namespace BenchmarkSystemTest
     public void CPUTest() {
       Owner owner = null;
       byte CPU = 3;
-     uint ExpectedRuntime = 0; 
-      Job target = new Job(owner, CPU, ExpectedRuntime); 
-      byte expected = 3; 
+      uint ExpectedRuntime = 0;
+      Job target = new Job(owner, CPU, ExpectedRuntime);
+      byte expected = 3;
       byte actual;
       target.CPU = expected;
       actual = target.CPU;
@@ -129,7 +128,7 @@ namespace BenchmarkSystemTest
     public void CPUTest0() {
       Owner owner = null;
       byte CPU = 0;
-     uint ExpectedRuntime = 0;
+      uint ExpectedRuntime = 0;
       Job target = new Job(owner, CPU, ExpectedRuntime);
     }
 
@@ -141,7 +140,7 @@ namespace BenchmarkSystemTest
     public void CPUTest255() {
       Owner owner = null;
       byte CPU = 255;
-     uint ExpectedRuntime = 0;
+      uint ExpectedRuntime = 0;
       Job target = new Job(owner, CPU, ExpectedRuntime);
     }
 
@@ -150,11 +149,11 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void ExpectedRuntimeTest0() {
-      Owner owner = null; 
-      byte CPU = 1; 
-     uint ExpectedRuntime = 0; 
-      Job target = new Job(owner, CPU, ExpectedRuntime); 
-      uint expected = 0; 
+      Owner owner = null;
+      byte CPU = 1;
+      uint ExpectedRuntime = 0;
+      Job target = new Job(owner, CPU, ExpectedRuntime);
+      uint expected = 0;
       uint actual;
       target.ExpectedRuntime = expected;
       actual = target.ExpectedRuntime;
@@ -182,9 +181,9 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void StateTest() {
-      Owner owner = null; 
-      byte CPU = 1; 
-     uint ExpectedRuntime = 0; 
+      Owner owner = null;
+      byte CPU = 1;
+      uint ExpectedRuntime = 0;
       Job target = new Job(owner, CPU, ExpectedRuntime);
       JobState expected = JobState.Created;
       JobState actual;
@@ -232,8 +231,8 @@ namespace BenchmarkSystemTest
     public void ownerTest() {
       Owner owner = new Owner("Test owner");
       byte CPU = 1;
-      uint ExpectedRuntime = 0; 
-      Job target = new Job(owner, CPU, ExpectedRuntime); 
+      uint ExpectedRuntime = 0;
+      Job target = new Job(owner, CPU, ExpectedRuntime);
       Owner expected = new Owner("Test owner");
       Owner actual;
       target.owner = expected;
@@ -277,17 +276,17 @@ namespace BenchmarkSystemTest
     ///A test for process
     ///</summary>
     //[TestMethod()]
-      //public void processTest() {
-      //Owner owner = null; // TODO: Initialize to an appropriate value
-      //byte CPU = 0; // TODO: Initialize to an appropriate value
-      //uint ExpectedRuntime = 0; // TODO: Initialize to an appropriate value
-      //Job target = new Job(owner, CPU, ExpectedRuntime); // TODO: Initialize to an appropriate value
-      //Func<string[], string> expected = null; // TODO: Initialize to an appropriate value
-      //Func<string[], string> actual;
-      //target.process = expected;
-      //actual = target.process;
-      //Assert.AreEqual(expected, actual);
-      //Assert.Inconclusive("Verify the correctness of this test method.");
+    //public void processTest() {
+    //Owner owner = null; // TODO: Initialize to an appropriate value
+    //byte CPU = 0; // TODO: Initialize to an appropriate value
+    //uint ExpectedRuntime = 0; // TODO: Initialize to an appropriate value
+    //Job target = new Job(owner, CPU, ExpectedRuntime); // TODO: Initialize to an appropriate value
+    //Func<string[], string> expected = null; // TODO: Initialize to an appropriate value
+    //Func<string[], string> actual;
+    //target.process = expected;
+    //actual = target.process;
+    //Assert.AreEqual(expected, actual);
+    //Assert.Inconclusive("Verify the correctness of this test method.");
     //}
 
     /// <summary>
@@ -297,8 +296,8 @@ namespace BenchmarkSystemTest
     [DeploymentItem("BenchmarkSystem.dll")]
     public void timestampTest() {
       PrivateObject param0 = new PrivateObject(new Job(null, 1, 20));
-      Job_Accessor target = new Job_Accessor(param0); 
-      long expected = 20; 
+      Job_Accessor target = new Job_Accessor(param0);
+      long expected = 20;
       long actual;
       target.timestamp = expected;
       actual = target.timestamp;
