@@ -164,36 +164,12 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void SubmitTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
+      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor();
+      Job job = new Job(null, 1, 1);
       target.Submit(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
-    }
-
-    /// <summary>
-    ///A test for benchmarkSystem_end
-    ///</summary>
-    [TestMethod()]
-    [DeploymentItem("BenchmarkSystem.dll")]
-    public void benchmarkSystem_endTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      object sender = null; // TODO: Initialize to an appropriate value
-      JobEventArgs e = null; // TODO: Initialize to an appropriate value
-      target.benchmarkSystem_end(sender, e);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
-    }
-
-    /// <summary>
-    ///A test for benchmarkSystem_start
-    ///</summary>
-    [TestMethod()]
-    [DeploymentItem("BenchmarkSystem.dll")]
-    public void benchmarkSystem_startTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      object sender = null; // TODO: Initialize to an appropriate value
-      JobEventArgs e = null; // TODO: Initialize to an appropriate value
-      target.benchmarkSystem_start(sender, e);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+      Scheduler_Accessor scheduler = target.scheduler;
+      //IList<Job> jobs = 
+      Assert.IsTrue(scheduler.jobs[Scheduler.GetJobType(job)].Contains(job));
     }
   }
 }

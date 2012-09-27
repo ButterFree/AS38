@@ -92,16 +92,6 @@ namespace BenchmarkSystemTest
     }
 
     /// <summary>
-    /// Testing negative runtime values for GetJobType
-    /// </summary>
-    //[TestMethod]
-    //[ExpectedException(typeof(ArgumentOutOfRangeException))]
-    //public void GetJobTypeNegativeTest() {
-      //Job test = new Job(owner, 6, -1);
-      //Scheduler.JobType jobType = Scheduler.GetJobType(test);
-    //}
-
-    /// <summary>
     ///A test for PopJob
     ///</summary>
     [TestMethod()]
