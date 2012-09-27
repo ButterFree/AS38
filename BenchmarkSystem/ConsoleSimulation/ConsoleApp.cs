@@ -14,9 +14,10 @@ namespace ConsoleSimulation
             //Logger logger = new Logger(system);
             for (int i = 0; i < 100; i++) {
                 Job job = new Job(me, 2, 1);
+                int value = i;
                 job.process = (a) =>
                 {
-                    Console.WriteLine("Job runs and runs");
+                    Console.WriteLine("Job" + value + " runs and runs");
                     return "";
                 };
                 system.Submit(job);
