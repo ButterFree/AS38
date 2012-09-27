@@ -45,8 +45,12 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <param name="job"></param>
     public void Submit(Job job) {
-      scheduler.AddJob(job);
-      OnJobQueued(job);
+        if (job != null) {
+            scheduler.AddJob(job);
+            OnJobQueued(job);
+        } else {
+            throw new ArgumentNullException();
+        }
     }
 
     /// <summary>
