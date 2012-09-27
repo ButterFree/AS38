@@ -65,16 +65,13 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void RemoveTest() {
+      BenchmarkSystem target = BenchmarkSystem.instance;
       Job job = new Job(owner, 3, 767);
       Job job2 = new Job(owner, 4, 2);
-      bench.Submit(job);
-      bench.Submit(job2);
-      bench.Remove(job);
-      Assert.ReferenceEquals(job, removedJob);
-    }
-
-    private void jobRemoved(object sender, JobEventArgs e) {
-      removedJob = e.job;
+      target.Submit(job);
+      target.Submit(job2);
+      target.Remove(job);
+      Assert.IsTrue(!target.Contains(job));
     }
 
     /// <summary>
