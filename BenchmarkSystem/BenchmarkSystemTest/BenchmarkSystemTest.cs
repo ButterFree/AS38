@@ -13,6 +13,7 @@ namespace BenchmarkSystemTest
     bool EventCalledBool = false;
 
     private TestContext testContextInstance;
+    private Owner owner = new Owner("Testuser");
 
     /// <summary>
     ///Gets or sets the test context which provides
@@ -57,26 +58,18 @@ namespace BenchmarkSystemTest
     //
     #endregion
 
-
     /// <summary>
-    ///A test for BenchmarkSystem Constructor
+    ///A test for Remove
     ///</summary>
     [TestMethod()]
-    [DeploymentItem("BenchmarkSystem.dll")]
-    public void BenchmarkSystemConstructorTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor();
-      Assert.AreEqual(target.running.Count, Enum.GetValues(typeof(Scheduler.JobType)).Length);
-    }
-
-    /// <summary>
-    ///A test for Cancel
-    ///</summary>
-    [TestMethod()]
-    public void CancelTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
-      target.Cancel(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+    public void RemoveTest() {
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      Job job = new Job(owner, 3, 767);
+      Job job2 = new Job(owner, 4, 2);
+      target.Submit(job);
+      target.Submit(job2);
+      target.Remove(job);
+      Assert.IsTrue(!target.Contains(job));
     }
 
     /// <summary>
