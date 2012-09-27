@@ -188,10 +188,11 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      EventCalledBool = false;
+      
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -203,10 +204,11 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      EventCalledBool = false;
+      
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -218,10 +220,11 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      EventCalledBool = false;
+      
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -233,10 +236,11 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      EventCalledBool = false;
+      
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -248,10 +252,10 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      EventCalledBool = false;
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
+      EventCalledBool = false;
     }
 
     /// <summary>
