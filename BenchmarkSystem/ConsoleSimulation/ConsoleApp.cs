@@ -27,6 +27,8 @@ namespace ConsoleSimulation
             Console.WriteLine(system.Status());
             Console.WriteLine("Executing all:");
             system.ExecuteAll();
+            Console.WriteLine("\nStatus: ");
+            Console.WriteLine(system.Status());
             Console.Read();
         }
     }
