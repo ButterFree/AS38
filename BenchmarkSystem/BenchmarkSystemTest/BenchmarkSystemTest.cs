@@ -79,8 +79,18 @@ namespace BenchmarkSystemTest
     [TestMethod()]
     public void ExecuteAllTest() {
       BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
+      Job job1 = new Job(owner, 2, 20);
+      Job job2 = new Job(owner, 4, 40);
+      Job job3 = new Job(owner, 6, 60);
+      Job job4 = new Job(owner, 5, 80);
+      Job job5 = new Job(owner, 3, 100);
+      target.Submit(job1);
+      target.Submit(job2);
+      target.Submit(job3);
+      target.Submit(job4);
+      target.Submit(job5);
       target.ExecuteAll();
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+      Assert.AreEqual((uint)0, target.TotalNumberOfJobs());
     }
 
     /// <summary>

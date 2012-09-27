@@ -67,7 +67,7 @@ namespace BenchmarkSystemTest
     [TestMethod()]
     public void JobEventArgsConstructorTest() {
       Job job = new Job(owner, 3, 986);
-      JobEventArgs target = new JobEventArgs(job);
+      JobEventArgs target = new JobEventArgs(job, JobEventArgs.EventType.JobQueued);
       Assert.AreSame(job, target.job);
     }
   }
