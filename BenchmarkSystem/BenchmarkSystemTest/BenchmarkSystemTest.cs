@@ -276,6 +276,55 @@ namespace BenchmarkSystemTest
     }
 
     /// <summary>
+    /// Test the Contains-method
+    /// </summary>
+    [TestMethod()]
+    public void ContainsTest() {
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      
+      // Add jobs and assert
+      uint max = 10;
+      Job[] jobs = new Job[max];
+      for (uint i = 1; i <= max; i++) {
+        Job job = new Job(null, 1, i);
+        jobs[i-1] = job;
+        target.Submit(job);
+        Assert.IsTrue(target.Contains(job));
+      }
+      // Remove jobs and assert
+      for (uint i = max - 1; i > 0; i--) {
+        target.Remove(jobs[i]);
+        Assert.IsFalse(target.Contains(jobs[i]));
+      }
+
+    }
+
+    /// <summary>
+    /// Test TotalNumberOfJobs()
+    /// </summary>
+    [TestMethod()]
+    public void TotalNumberOfJobsTest() {
+      BenchmarkSystem target = BenchmarkSystem.instance;
+
+      // Add jobs and assert
+      uint max = 10;
+      Job[] jobs = new Job[max];
+      Assert.AreEqual((uint)0, target.TotalNumberOfJobs());
+      for (uint i = 1; i <= max; i++) {
+        Job job = new Job(null, 1, i);
+        jobs[i-1] = job;
+        target.Submit(job);
+        Assert.AreEqual(i, target.TotalNumberOfJobs());
+      }
+
+      // Remove jobs and assert
+      for (uint i = max-1; i > 0; i--) {
+        target.Remove(jobs[i]);
+        Assert.AreEqual(i, target.TotalNumberOfJobs());
+      }
+    }
+
+    /// <summary>
     /// Did we receive an event?
     /// Remember to set EventCalledBool = false after this method call
     /// </summary>

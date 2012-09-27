@@ -70,5 +70,19 @@ namespace BenchmarkSystemTest
       JobEventArgs target = new JobEventArgs(job, JobEventArgs.EventType.JobQueued);
       Assert.AreSame(job, target.job);
     }
+
+    [TestMethod()]
+    public void EnumTest() {
+      Job job = new Job(owner, 3, 986);
+      JobEventArgs target = new JobEventArgs(job, JobEventArgs.EventType.JobQueued);
+      Assert.AreEqual(JobEventArgs.EventType.JobQueued, target.eventType);
+    }
+
+    [TestMethod()]
+    public void EnumTest2() {
+      Job job = new Job(owner, 3, 986);
+      JobEventArgs target = new JobEventArgs(job, JobEventArgs.EventType.JobRemoved);
+      Assert.AreEqual(JobEventArgs.EventType.JobRemoved, target.eventType);
+    }
   }
 }
