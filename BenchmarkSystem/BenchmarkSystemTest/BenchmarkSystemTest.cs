@@ -184,6 +184,7 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void QueuedTest() {
+      Assert.Inconclusive("TODO");
     }
 
     /// <summary>
@@ -191,6 +192,7 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void RemovedTest() {
+      Assert.Inconclusive("TODO");
     }
 
     /// <summary>
@@ -198,6 +200,7 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void StartedTest() {
+      Assert.Inconclusive("TODO");
     }
 
     /// <summary>
@@ -205,6 +208,7 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void TerminatedTest() {
+      Assert.Inconclusive("TODO");
     }
 
     /// <summary>
@@ -212,6 +216,7 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void FailedTest() {
+      Assert.Inconclusive("TODO");
     }
 
     /// <summary>
