@@ -93,6 +93,23 @@ namespace BenchmarkSystemNs {
       }
     }
 
+    /// <summary>
+    /// Return total number of jobs on the queues.
+    /// </summary>
+    /// <returns>uint total number of jobs</returns>
+    public uint TotalNumberOfJobs() {
+      return scheduler.TotalNumberOfJobs();
+    }
+
+    /// <summary>
+    /// Returns whether the queues holds the job
+    /// </summary>
+    /// <param name="job">Job</param>
+    /// <returns>bool contains job</returns>
+    public bool Contains(Job job) {
+      return scheduler.Contains(job);
+    }
+
     #region EventFunctions
 
     public void OnJobSubmitted(Job job) {
@@ -122,12 +139,12 @@ namespace BenchmarkSystemNs {
     #endregion
 
     // These are used to keep track of number of jobs running
-    void benchmarkSystem_start(object sender, JobEventArgs e) {
+    private void benchmarkSystem_start(object sender, JobEventArgs e) {
       running[Scheduler.GetJobType(e.job)]++;
     }
 
     // These are used to keep track of number of jobs running
-    void benchmarkSystem_end(object sender, JobEventArgs e) {
+    private void benchmarkSystem_end(object sender, JobEventArgs e) {
       running[Scheduler.GetJobType(e.job)]--;
     }
   }

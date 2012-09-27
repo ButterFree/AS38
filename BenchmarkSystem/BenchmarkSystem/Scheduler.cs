@@ -105,5 +105,33 @@ namespace BenchmarkSystemNs {
       }
       return str.ToString();
     }
+
+    /// <summary>
+    /// Return total number of jobs on the queues.
+    /// </summary>
+    /// <returns>uint total number of jobs</returns>
+    public uint TotalNumberOfJobs() {
+      uint count = 0;
+      foreach (IList<Job> list in jobs.Values) {
+        count += (uint)list.Count;
+      }
+      return count;
+    }
+
+    /// <summary>
+    /// Returns whether the queues holds the job
+    /// </summary>
+    /// <param name="job">Job</param>
+    /// <returns>bool contains job</returns>
+    public bool Contains(Job job) {
+      bool contains = false;
+      foreach (IList<Job> list in jobs.Values) {
+        if (list.Contains(job)) {
+          contains = true;
+          break;
+        }
+      }
+      return contains;
+    }
   }
 }

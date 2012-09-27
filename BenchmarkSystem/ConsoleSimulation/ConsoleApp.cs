@@ -12,7 +12,7 @@ namespace ConsoleSimulation
             Owner me = new Owner("Test");
             BenchmarkSystem system = BenchmarkSystem.instance;
             //Logger logger = new Logger(system);
-            for (int i = 0; i < 100; i++) {
+            for (int i = 1; i <= 100; i++) {
                 Job job = new Job(me, 2, 1);
                 int value = i;
                 job.process = (a) =>
@@ -24,9 +24,11 @@ namespace ConsoleSimulation
             }
             
             Console.WriteLine("Status: ");
-            system.Status();
+            Console.WriteLine(system.Status());
             Console.WriteLine("Executing all:");
             system.ExecuteAll();
+            Console.WriteLine("\nStatus: ");
+            Console.WriteLine(system.Status());
             Console.Read();
         }
     }
