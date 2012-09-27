@@ -184,6 +184,13 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void QueuedTest() {
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      EventCalledBool = false;
+      Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
     }
 
@@ -192,6 +199,13 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void RemovedTest() {
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      EventCalledBool = false;
+      Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
     }
 
@@ -200,6 +214,13 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void StartedTest() {
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      EventCalledBool = false;
+      Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
     }
 
@@ -208,6 +229,13 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void TerminatedTest() {
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      EventCalledBool = false;
+      Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
     }
 
@@ -216,6 +244,13 @@ namespace BenchmarkSystemTest
     /// </summary>
     [TestMethod()]
     public void FailedTest() {
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      EventCalledBool = false;
+      Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       Assert.Inconclusive("TODO");
     }
 
