@@ -46,7 +46,7 @@ namespace BenchmarkSystemNs {
     /// <param name="job"></param>
     public void Submit(Job job) {
       scheduler.AddJob(job);
-      OnJobSubmitted(job);
+      OnJobQueued(job);
     }
 
     /// <summary>
@@ -80,7 +80,7 @@ namespace BenchmarkSystemNs {
         string[] args = { "" };
         nextJob.State = JobState.Running;
         running[Scheduler.GetJobType(nextJob)]++;
-        OnJobRunning(nextJob);
+        OnJobStarted(nextJob);
         try {
           nextJob.process(args);
           nextJob.State = JobState.Succesfull;
@@ -112,29 +112,29 @@ namespace BenchmarkSystemNs {
 
     #region EventFunctions
 
-    public void OnJobSubmitted(Job job) {
+    public void OnJobQueued(Job job) {
       if (JobQueued != null)
-        JobQueued(this, new JobEventArgs(job));
+        JobQueued(this, new JobEventArgs(job, JobEventArgs.EventType.JobQueued));
     }
 
     public void OnJobRemoved(Job job) {
       if (JobRemoved != null)
-        JobRemoved(this, new JobEventArgs(job));
+        JobRemoved(this, new JobEventArgs(job, JobEventArgs.EventType.JobRemoved));
     }
 
-    public void OnJobRunning(Job job) {
+    public void OnJobStarted(Job job) {
       if (JobStarted != null)
-        JobStarted(this, new JobEventArgs(job));
+        JobStarted(this, new JobEventArgs(job, JobEventArgs.EventType.JobStarted));
     }
 
     public void OnJobTerminated(Job job) {
       if (JobTerminated != null)
-        JobTerminated(this, new JobEventArgs(job));
+        JobTerminated(this, new JobEventArgs(job, JobEventArgs.EventType.JobTerminated));
     }
 
     public void OnJobFailed(Job job) {
       if (JobFailed != null)
-        JobFailed(this, new JobEventArgs(job));
+        JobFailed(this, new JobEventArgs(job, JobEventArgs.EventType.JobFailed));
     }
     #endregion
 
