@@ -102,8 +102,9 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobRemoved += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      target.OnJobQueued(job);
+      target.OnJobRemoved(job);
       Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobRemoved, eventType);
       EventCalledBool = false;
     }
 
@@ -116,8 +117,9 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobFailed += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      target.OnJobQueued(job);
+      target.OnJobFailed(job);
       Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobFailed, eventType);
       EventCalledBool = false;
     }
 
@@ -125,13 +127,14 @@ namespace BenchmarkSystemTest
     ///A test for OnJobRunning
     ///</summary>
     [TestMethod()]
-    public void OnJobRunningTest() {
+    public void OnJobStartedTest() {
       EventCalledBool = false;
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobStarted += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      target.OnJobQueued(job);
+      target.OnJobStarted(job);
       Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobStarted, eventType);
       EventCalledBool = false;
     }
 
@@ -146,6 +149,7 @@ namespace BenchmarkSystemTest
       Job job = new Job(null, 1, 1);
       target.OnJobQueued(job);
       Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobQueued, eventType);
       EventCalledBool = false;
     }
 
@@ -160,6 +164,7 @@ namespace BenchmarkSystemTest
       Job job = new Job(null, 1, 1);
       target.OnJobTerminated(job);
       Assert.IsTrue(EventCalledBool);
+      Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       EventCalledBool = false;
     }
 
@@ -175,10 +180,38 @@ namespace BenchmarkSystemTest
     }
 
     /// <summary>
-    /// Does the event 
+    /// Does the correct event get called by the correct trigger
     /// </summary>
     [TestMethod()]
     public void QueuedTest() {
+    }
+
+    /// <summary>
+    /// Does the correct event get called by the correct trigger
+    /// </summary>
+    [TestMethod()]
+    public void RemovedTest() {
+    }
+
+    /// <summary>
+    /// Does the correct event get called by the correct trigger
+    /// </summary>
+    [TestMethod()]
+    public void StartedTest() {
+    }
+
+    /// <summary>
+    /// Does the correct event get called by the correct trigger
+    /// </summary>
+    [TestMethod()]
+    public void TerminatedTest() {
+    }
+
+    /// <summary>
+    /// Does the correct event get called by the correct trigger
+    /// </summary>
+    [TestMethod()]
+    public void FailedTest() {
     }
 
     /// <summary>
