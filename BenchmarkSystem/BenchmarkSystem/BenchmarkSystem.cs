@@ -87,7 +87,7 @@ namespace BenchmarkSystemNs {
           OnJobTerminated(nextJob);
         } catch (Exception e) {
           nextJob.State = JobState.Failed;
-          OnJobFailed(nextJob);
+          OnJobFailed(nextJob,e);
         }
         running[Scheduler.GetJobType(nextJob)]--;
       }
@@ -132,9 +132,9 @@ namespace BenchmarkSystemNs {
         JobTerminated(this, new JobEventArgs(job, JobEventArgs.EventType.JobTerminated));
     }
 
-    public void OnJobFailed(Job job) {
+    public void OnJobFailed(Job job, Exception e) {
       if (JobFailed != null)
-        JobFailed(this, new JobEventArgs(job, JobEventArgs.EventType.JobFailed));
+        JobFailed(this, new JobEventArgs(job, e));
     }
     #endregion
 
