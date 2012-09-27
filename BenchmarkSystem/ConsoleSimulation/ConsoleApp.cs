@@ -20,7 +20,7 @@ namespace ConsoleSimulation
                     Console.WriteLine("Job" + value + " runs and runs");
                     return "";
                 };
-                system.Queued(job);
+                system.Submit(job);
             }
             
             Console.WriteLine("Status: ");
