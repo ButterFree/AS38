@@ -2,14 +2,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace BenchmarkSystemTest
-{
-    
-    
-    /// <summary>
-    ///This is a test class for OwnerTest and is intended
-    ///to contain all OwnerTest Unit Tests
-    ///</summary>
+namespace BenchmarkSystemTest {
+
+
+  /// <summary>
+  ///This is a test class for OwnerTest and is intended
+  ///to contain all OwnerTest Unit Tests
+  ///</summary>
   [TestClass()]
   public class OwnerTest {
 

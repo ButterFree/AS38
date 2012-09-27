@@ -2,14 +2,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace BenchmarkSystemTest
-{
-    
-    
-    /// <summary>
-    ///This is a test class for JobEventArgsTest and is intended
-    ///to contain all JobEventArgsTest Unit Tests
-    ///</summary>
+namespace BenchmarkSystemTest {
+
+
+  /// <summary>
+  ///This is a test class for JobEventArgsTest and is intended
+  ///to contain all JobEventArgsTest Unit Tests
+  ///</summary>
   [TestClass()]
   public class JobEventArgsTest {
 

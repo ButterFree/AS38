@@ -35,7 +35,7 @@ namespace BenchmarkSystemNs {
 
       // Initialize keys
       foreach (Scheduler.JobType type in Enum.GetValues(typeof(Scheduler.JobType))) {
-          running.Add(type, 0);
+        running.Add(type, 0);
       }
     }
 
@@ -45,12 +45,12 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <param name="job"></param>
     public void Submit(Job job) {
-        if (job != null) {
-            scheduler.AddJob(job);
-            OnJobQueued(job);
-        } else {
-            throw new ArgumentNullException();
-        }
+      if (job != null) {
+        scheduler.AddJob(job);
+        OnJobQueued(job);
+      } else {
+        throw new ArgumentNullException();
+      }
     }
 
     /// <summary>
@@ -69,7 +69,7 @@ namespace BenchmarkSystemNs {
     public string Status() {
       StringBuilder str = new StringBuilder();
       foreach (Scheduler.JobType type in running.Keys) {
-        str.AppendLine(type+": "+running[type]+"/20 running");
+        str.AppendLine(type + ": " + running[type] + "/20 running");
       }
       str.AppendLine(scheduler.ToString());
       return str.ToString();
@@ -80,7 +80,7 @@ namespace BenchmarkSystemNs {
     /// </summary>
     public void ExecuteAll() {
       Job nextJob = null;
-      while((nextJob = scheduler.PopJob()) != null) {
+      while ((nextJob = scheduler.PopJob()) != null) {
         string[] args = { "" };
         nextJob.State = JobState.Running;
         running[Scheduler.GetJobType(nextJob)]++;
@@ -91,7 +91,7 @@ namespace BenchmarkSystemNs {
           OnJobTerminated(nextJob);
         } catch (Exception e) {
           nextJob.State = JobState.Failed;
-          OnJobFailed(nextJob,e);
+          OnJobFailed(nextJob, e);
         }
         running[Scheduler.GetJobType(nextJob)]--;
       }

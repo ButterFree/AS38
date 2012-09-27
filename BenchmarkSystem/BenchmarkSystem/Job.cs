@@ -11,7 +11,7 @@ namespace BenchmarkSystemNs {
     /// <param name="owner">Owner for class</param>
     /// <param name="CPU">Number of threads</param>
     /// <param name="ExpectedRuntime">Expected runtime</param>
-    public Job(Owner owner, byte CPU,uint ExpectedRuntime) {
+    public Job(Owner owner, byte CPU, uint ExpectedRuntime) {
       if (CPU > 7) throw new ArgumentOutOfRangeException("No more than 6 CPU's available. Tried to add job with: " + CPU);
       if (CPU < 1) throw new ArgumentOutOfRangeException("No less than 1 CPU. Tried to add job with: " + CPU);
       this.owner = owner;
@@ -81,7 +81,7 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <returns>String descriping this job</returns>
     public override string ToString() {
-      return "("+timestamp+")Job: [owner="+owner.Name+",CPU="+CPU+"ExpectedRuntime="+ExpectedRuntime+"] - "+State;
+      return "(" + timestamp + ")Job: [owner=" + owner.Name + ",CPU=" + CPU + "ExpectedRuntime=" + ExpectedRuntime + "] - " + State;
     }
   }
 
