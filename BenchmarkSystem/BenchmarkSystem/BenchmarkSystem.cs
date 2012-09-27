@@ -50,12 +50,12 @@ namespace BenchmarkSystemNs {
     }
 
     /// <summary>
-    /// Cancel job will remove job from queue.
+    /// Remove job will remove job from queue.
     /// </summary>
     /// <param name="job"></param>
-    public void Cancel(Job job) {
+    public void Remove(Job job) {
       scheduler.RemoveJob(job);
-      OnJobCancelled(job);
+      OnJobRemoved(job);
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ namespace BenchmarkSystemNs {
         JobQueued(this, new JobEventArgs(job));
     }
 
-    public void OnJobCancelled(Job job) {
+    public void OnJobRemoved(Job job) {
       if (JobRemoved != null)
         JobRemoved(this, new JobEventArgs(job));
     }
