@@ -11,6 +11,7 @@ namespace BenchmarkSystemTest
   [TestClass()]
   public class BenchmarkSystemTest {
     bool EventCalledBool = false;
+    JobEventArgs.EventType eventType;
 
     private TestContext testContextInstance;
     private Owner owner = new Owner("Testuser");
@@ -159,7 +160,7 @@ namespace BenchmarkSystemTest
     public void SubmitTest() {
       BenchmarkSystem target = BenchmarkSystem.instance;
       Job job = new Job(null, 1, 1);
-      target.Queued(job);
+      target.Submit(job);
       Assert.IsTrue(target.Contains(job));
     }
 
@@ -177,7 +178,7 @@ namespace BenchmarkSystemTest
     /// <param name="sender"></param>
     /// <param name="e"></param>
     void EventCalled(object sender, JobEventArgs e) {
-      Console.WriteLine("Event: " + e.ToString());
+      eventType = e.eventType;
       EventCalledBool = true;
     }
   }
