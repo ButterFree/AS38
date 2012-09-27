@@ -13,6 +13,12 @@ namespace BenchmarkSystemNs
             this.eventType = type;
         }
 
+        public JobEventArgs(Job job, Exception e) {
+            this.job = job;
+            this.eventType = EventType.JobFailed;
+            this.error = e;
+        }
+
         public Job job
         {
             get;
@@ -22,6 +28,11 @@ namespace BenchmarkSystemNs
         public EventType eventType {
           get;
           private set;
+        }
+
+        public Exception error {
+            get;
+            private set;
         }
 
         public enum EventType {

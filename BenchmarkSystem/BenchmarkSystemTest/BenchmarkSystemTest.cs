@@ -118,7 +118,7 @@ namespace BenchmarkSystemTest
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobFailed += new EventHandler<JobEventArgs>(EventCalled);
       Job job = new Job(null, 1, 1);
-      target.OnJobFailed(job);
+      target.OnJobFailed(job,new Exception("Test exception"));
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobFailed, eventType);
       EventCalledBool = false;
