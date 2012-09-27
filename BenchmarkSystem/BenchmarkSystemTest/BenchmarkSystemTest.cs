@@ -67,7 +67,7 @@ namespace BenchmarkSystemTest
     [DeploymentItem("BenchmarkSystem.dll")]
     public void BenchmarkSystemConstructorTest() {
       BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor();
-      Assert.Inconclusive("TODO: Implement code to verify target");
+      Assert.AreEqual(target.running.Count, Enum.GetValues(typeof(Scheduler.JobType)).Length);
     }
 
     /// <summary>
