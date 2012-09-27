@@ -157,12 +157,10 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void SubmitTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor();
+      BenchmarkSystem target = BenchmarkSystem.instance;
       Job job = new Job(null, 1, 1);
       target.Submit(job);
-      Scheduler_Accessor scheduler = target.scheduler;
-      //IList<Job> jobs = 
-      Assert.IsTrue(scheduler.jobs[Scheduler.GetJobType(job)].Contains(job));
+      Assert.IsTrue(target.Contains(job));
     }
   }
 }
