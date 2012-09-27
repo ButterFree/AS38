@@ -80,7 +80,6 @@ namespace BenchmarkSystemNs {
     /// <param name="job">Job</param>
     /// <returns>JobType</returns>
     public static JobType GetJobType(Job job) {
-      if (job.ExpectedRuntime < 0) throw new ArgumentOutOfRangeException("Negative expected runtime");
       if (job.ExpectedRuntime < 30) {
         return JobType.Short;
       } else if (job.ExpectedRuntime >= 30 && job.ExpectedRuntime < 120) {
