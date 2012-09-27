@@ -3,16 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
 namespace BenchmarkSystemTest
-{
-    
-    
+{   
     /// <summary>
     ///This is a test class for BenchmarkSystemTest and is intended
     ///to contain all BenchmarkSystemTest Unit Tests
     ///</summary>
   [TestClass()]
   public class BenchmarkSystemTest {
-
+    bool EventCalledBool = false;
 
     private TestContext testContextInstance;
 
@@ -92,14 +90,17 @@ namespace BenchmarkSystemTest
     }
 
     /// <summary>
-    ///A test for OnJobCancelled
+    ///A test for OnJobRemoved
     ///</summary>
     [TestMethod()]
-    public void OnJobCancelledTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
-      target.OnJobCancelled(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+    public void OnJobRemovedTest() {
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobRemoved += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      target.OnJobQueued(job);
+      Assert.IsTrue(EventCalledBool);
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -107,10 +108,13 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void OnJobFailedTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
-      target.OnJobFailed(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobFailed += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      target.OnJobQueued(job);
+      Assert.IsTrue(EventCalledBool);
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -118,21 +122,27 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void OnJobRunningTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
-      target.OnJobRunning(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobStarted += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      target.OnJobQueued(job);
+      Assert.IsTrue(EventCalledBool);
+      EventCalledBool = false;
     }
 
     /// <summary>
-    ///A test for OnJobSubmitted
+    ///A test for OnJobQueued
     ///</summary>
     [TestMethod()]
-    public void OnJobSubmittedTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
-      target.OnJobSubmitted(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
+    public void OnJobQueuedTest() {
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobQueued += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
+      target.OnJobQueued(job);
+      Assert.IsTrue(EventCalledBool);
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -140,23 +150,13 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void OnJobTerminatedTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job = null; // TODO: Initialize to an appropriate value
+      EventCalledBool = false;
+      BenchmarkSystem target = BenchmarkSystem.instance;
+      target.JobTerminated += new EventHandler<JobEventArgs>(EventCalled);
+      Job job = new Job(null, 1, 1);
       target.OnJobTerminated(job);
-      Assert.Inconclusive("A method that does not return a value cannot be verified.");
-    }
-
-    /// <summary>
-    ///A test for Status
-    ///</summary>
-    [TestMethod()]
-    public void StatusTest() {
-      BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      string expected = string.Empty; // TODO: Initialize to an appropriate value
-      string actual;
-      actual = target.Status();
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
+      Assert.IsTrue(EventCalledBool);
+      EventCalledBool = false;
     }
 
     /// <summary>
@@ -166,8 +166,26 @@ namespace BenchmarkSystemTest
     public void SubmitTest() {
       BenchmarkSystem target = BenchmarkSystem.instance;
       Job job = new Job(null, 1, 1);
-      target.Submit(job);
+      target.Queued(job);
       Assert.IsTrue(target.Contains(job));
+    }
+
+    /// <summary>
+    /// Does the event 
+    /// </summary>
+    [TestMethod()]
+    public void QueuedTest() {
+    }
+
+    /// <summary>
+    /// Did we receive an event?
+    /// Remember to set EventCalledBool = false after this method call
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    void EventCalled(object sender, JobEventArgs e) {
+      Console.WriteLine("Event: " + e.ToString());
+      EventCalledBool = true;
     }
   }
 }
