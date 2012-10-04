@@ -4,44 +4,254 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl" Namespace="DB.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="DBTargetContainer" >
+      <Schema Namespace="benchmarksystemModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.1" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="benchmarksystemModelStoreContainer">
+          <EntitySet Name="jobs" EntityType="benchmarksystemModel.Store.jobs" store:Type="Tables" Schema="benchmarksystem" />
+          <EntitySet Name="jobs_has_jobstate" EntityType="benchmarksystemModel.Store.jobs_has_jobstate" store:Type="Tables" Schema="benchmarksystem" />
+          <EntitySet Name="jobstate" EntityType="benchmarksystemModel.Store.jobstate" store:Type="Tables" Schema="benchmarksystem" />
+          <EntitySet Name="owners" EntityType="benchmarksystemModel.Store.owners" store:Type="Tables" Schema="benchmarksystem" />
+          <AssociationSet Name="fk_Jobs_has_JobState_Jobs1" Association="benchmarksystemModel.Store.fk_Jobs_has_JobState_Jobs1">
+            <End Role="jobs" EntitySet="jobs" />
+            <End Role="jobs_has_jobstate" EntitySet="jobs_has_jobstate" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Jobs_has_JobState_JobState1" Association="benchmarksystemModel.Store.fk_Jobs_has_JobState_JobState1">
+            <End Role="jobstate" EntitySet="jobstate" />
+            <End Role="jobs_has_jobstate" EntitySet="jobs_has_jobstate" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Jobs_Owners" Association="benchmarksystemModel.Store.fk_Jobs_Owners">
+            <End Role="owners" EntitySet="owners" />
+            <End Role="jobs" EntitySet="jobs" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="jobs">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="int" Nullable="false" />
+          <Property Name="CPU" Type="tinyint" Nullable="false" />
+          <Property Name="ExpectedRuntime" Type="int" Nullable="false" />
+          <Property Name="Owners_OwnerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="jobs_has_jobstate">
+          <Key>
+            <PropertyRef Name="Jobs_JobID" />
+            <PropertyRef Name="JobState_JobStateID" />
+          </Key>
+          <Property Name="Jobs_JobID" Type="int" Nullable="false" />
+          <Property Name="JobState_JobStateID" Type="int" Nullable="false" />
+          <Property Name="Timestamp" Type="timestamp" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="jobstate">
+          <Key>
+            <PropertyRef Name="JobStateID" />
+          </Key>
+          <Property Name="JobStateID" Type="int" Nullable="false" />
+          <Property Name="JobState" Type="varchar" Nullable="false" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="owners">
+          <Key>
+            <PropertyRef Name="OwnerID" />
+          </Key>
+          <Property Name="OwnerID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <Association Name="fk_Jobs_has_JobState_Jobs1">
+          <End Role="jobs" Type="benchmarksystemModel.Store.jobs" Multiplicity="1" />
+          <End Role="jobs_has_jobstate" Type="benchmarksystemModel.Store.jobs_has_jobstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jobs">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="jobs_has_jobstate">
+              <PropertyRef Name="Jobs_JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Jobs_has_JobState_JobState1">
+          <End Role="jobstate" Type="benchmarksystemModel.Store.jobstate" Multiplicity="1" />
+          <End Role="jobs_has_jobstate" Type="benchmarksystemModel.Store.jobs_has_jobstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jobstate">
+              <PropertyRef Name="JobStateID" />
+            </Principal>
+            <Dependent Role="jobs_has_jobstate">
+              <PropertyRef Name="JobState_JobStateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Jobs_Owners">
+          <End Role="owners" Type="benchmarksystemModel.Store.owners" Multiplicity="1" />
+          <End Role="jobs" Type="benchmarksystemModel.Store.jobs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owners">
+              <PropertyRef Name="OwnerID" />
+            </Principal>
+            <Dependent Role="jobs">
+              <PropertyRef Name="Owners_OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DB" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
-        <EntityContainer Name="DBContainer" annotation:LazyLoadingEnabled="true">
+      <Schema Namespace="benchmarksystemModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="benchmarksystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="jobs" EntityType="benchmarksystemModel.job" />
+          <EntitySet Name="jobs_has_jobstate" EntityType="benchmarksystemModel.jobs_has_jobstate" />
+          <EntitySet Name="jobstates" EntityType="benchmarksystemModel.jobstate" />
+          <EntitySet Name="owners" EntityType="benchmarksystemModel.owner" />
+          <AssociationSet Name="fk_Jobs_has_JobState_Jobs1" Association="benchmarksystemModel.fk_Jobs_has_JobState_Jobs1">
+            <End Role="jobs" EntitySet="jobs" />
+            <End Role="jobs_has_jobstate" EntitySet="jobs_has_jobstate" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Jobs_Owners" Association="benchmarksystemModel.fk_Jobs_Owners">
+            <End Role="owners" EntitySet="owners" />
+            <End Role="jobs" EntitySet="jobs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Jobs_has_JobState_JobState1" Association="benchmarksystemModel.fk_Jobs_has_JobState_JobState1">
+            <End Role="jobstate" EntitySet="jobstates" />
+            <End Role="jobs_has_jobstate" EntitySet="jobs_has_jobstate" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="job">
+          <Key>
+            <PropertyRef Name="JobID" />
+          </Key>
+          <Property Name="JobID" Type="Int32" Nullable="false" />
+          <Property Name="CPU" Type="SByte" Nullable="false" />
+          <Property Name="ExpectedRuntime" Type="Int32" Nullable="false" />
+          <Property Name="Owners_OwnerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="jobs_has_jobstate" Relationship="benchmarksystemModel.fk_Jobs_has_JobState_Jobs1" FromRole="jobs" ToRole="jobs_has_jobstate" />
+          <NavigationProperty Name="owner" Relationship="benchmarksystemModel.fk_Jobs_Owners" FromRole="jobs" ToRole="owners" />
+        </EntityType>
+        <EntityType Name="jobs_has_jobstate">
+          <Key>
+            <PropertyRef Name="Jobs_JobID" />
+            <PropertyRef Name="JobState_JobStateID" />
+          </Key>
+          <Property Name="Jobs_JobID" Type="Int32" Nullable="false" />
+          <Property Name="JobState_JobStateID" Type="Int32" Nullable="false" />
+          <Property Name="Timestamp" Type="DateTimeOffset" Nullable="false" />
+          <NavigationProperty Name="job" Relationship="benchmarksystemModel.fk_Jobs_has_JobState_Jobs1" FromRole="jobs_has_jobstate" ToRole="jobs" />
+          <NavigationProperty Name="jobstate" Relationship="benchmarksystemModel.fk_Jobs_has_JobState_JobState1" FromRole="jobs_has_jobstate" ToRole="jobstate" />
+        </EntityType>
+        <EntityType Name="jobstate">
+          <Key>
+            <PropertyRef Name="JobStateID" />
+          </Key>
+          <Property Name="JobStateID" Type="Int32" Nullable="false" />
+          <Property Name="JobState1" Type="String" Nullable="false" />
+          <NavigationProperty Name="jobs_has_jobstate" Relationship="benchmarksystemModel.fk_Jobs_has_JobState_JobState1" FromRole="jobstate" ToRole="jobs_has_jobstate" />
+        </EntityType>
+        <EntityType Name="owner">
+          <Key>
+            <PropertyRef Name="OwnerID" />
+          </Key>
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" />
+          <NavigationProperty Name="jobs" Relationship="benchmarksystemModel.fk_Jobs_Owners" FromRole="owners" ToRole="jobs" />
+        </EntityType>
+        <Association Name="fk_Jobs_has_JobState_Jobs1">
+          <End Role="jobs" Type="benchmarksystemModel.job" Multiplicity="1" />
+          <End Role="jobs_has_jobstate" Type="benchmarksystemModel.jobs_has_jobstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jobs">
+              <PropertyRef Name="JobID" />
+            </Principal>
+            <Dependent Role="jobs_has_jobstate">
+              <PropertyRef Name="Jobs_JobID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Jobs_Owners">
+          <End Role="owners" Type="benchmarksystemModel.owner" Multiplicity="1" />
+          <End Role="jobs" Type="benchmarksystemModel.job" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="owners">
+              <PropertyRef Name="OwnerID" />
+            </Principal>
+            <Dependent Role="jobs">
+              <PropertyRef Name="Owners_OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Jobs_has_JobState_JobState1">
+          <End Role="jobstate" Type="benchmarksystemModel.jobstate" Multiplicity="1" />
+          <End Role="jobs_has_jobstate" Type="benchmarksystemModel.jobs_has_jobstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="jobstate">
+              <PropertyRef Name="JobStateID" />
+            </Principal>
+            <Dependent Role="jobs_has_jobstate">
+              <PropertyRef Name="JobState_JobStateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="DB" />
-        <Alias Key="Target" Value="DB.Store" />
-        <EntityContainerMapping CdmEntityContainer="DBContainer" StorageEntityContainer="DBTargetContainer">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="benchmarksystemModelStoreContainer" CdmEntityContainer="benchmarksystemEntities">
+          <EntitySetMapping Name="jobs"><EntityTypeMapping TypeName="benchmarksystemModel.job"><MappingFragment StoreEntitySet="jobs">
+            <ScalarProperty Name="JobID" ColumnName="JobID" />
+            <ScalarProperty Name="CPU" ColumnName="CPU" />
+            <ScalarProperty Name="ExpectedRuntime" ColumnName="ExpectedRuntime" />
+            <ScalarProperty Name="Owners_OwnerID" ColumnName="Owners_OwnerID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="jobs_has_jobstate"><EntityTypeMapping TypeName="benchmarksystemModel.jobs_has_jobstate"><MappingFragment StoreEntitySet="jobs_has_jobstate">
+            <ScalarProperty Name="Jobs_JobID" ColumnName="Jobs_JobID" />
+            <ScalarProperty Name="JobState_JobStateID" ColumnName="JobState_JobStateID" />
+            <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="jobstates"><EntityTypeMapping TypeName="benchmarksystemModel.jobstate"><MappingFragment StoreEntitySet="jobstate">
+            <ScalarProperty Name="JobStateID" ColumnName="JobStateID" />
+            <ScalarProperty Name="JobState1" ColumnName="JobState" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="owners"><EntityTypeMapping TypeName="benchmarksystemModel.owner"><MappingFragment StoreEntitySet="owners">
+            <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
-    <edmx:Connection>
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
-    </edmx:Connection>
-    <edmx:Options>
+    </Connection>
+    <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
       </DesignerInfoPropertySet>
-    </edmx:Options>
+    </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <edmx:Diagrams>
-      <Diagram Name="DB" />
-    </edmx:Diagrams>
-  </edmx:Designer>
+    <Diagrams>
+      <Diagram Name="Db">
+        <EntityTypeShape EntityType="benchmarksystemModel.job" Width="1.5" PointX="3" PointY="0.875" Height="2.1725878906250005" IsExpanded="true" />
+        <EntityTypeShape EntityType="benchmarksystemModel.jobs_has_jobstate" Width="1.5" PointX="5.25" PointY="1" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="benchmarksystemModel.jobstate" Width="1.5" PointX="3" PointY="5.25" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="benchmarksystemModel.owner" Width="1.5" PointX="0.75" PointY="1.25" Height="1.5956835937499996" IsExpanded="true" />
+        <AssociationConnector Association="benchmarksystemModel.fk_Jobs_has_JobState_Jobs1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="1.9901432291666668" />
+          <ConnectorPoint PointX="5.25" PointY="1.9901432291666668" />
+        </AssociationConnector>
+        <AssociationConnector Association="benchmarksystemModel.fk_Jobs_Owners" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.047841796875" />
+          <ConnectorPoint PointX="3" PointY="2.047841796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="benchmarksystemModel.fk_Jobs_has_JobState_JobState1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.047841796875" />
+          <ConnectorPoint PointX="6" PointY="6.047841796875" />
+          <ConnectorPoint PointX="6" PointY="2.9802864583333335" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
 </edmx:Edmx>

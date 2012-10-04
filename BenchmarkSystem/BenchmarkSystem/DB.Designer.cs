@@ -8,15 +8,22 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
-using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Data.EntityClient;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("benchmarksystemModel", "fk_Jobs_has_JobState_Jobs1", "jobs", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(BenchmarkSystem.job), "jobs_has_jobstate", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BenchmarkSystem.jobs_has_jobstate), true)]
+[assembly: EdmRelationshipAttribute("benchmarksystemModel", "fk_Jobs_Owners", "owners", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(BenchmarkSystem.owner), "jobs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BenchmarkSystem.job), true)]
+[assembly: EdmRelationshipAttribute("benchmarksystemModel", "fk_Jobs_has_JobState_JobState1", "jobstate", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(BenchmarkSystem.jobstate), "jobs_has_jobstate", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(BenchmarkSystem.jobs_has_jobstate), true)]
+
+#endregion
+
 namespace BenchmarkSystem
 {
     #region Contexts
@@ -24,32 +31,32 @@ namespace BenchmarkSystem
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    public partial class DBContainer : ObjectContext
+    public partial class benchmarksystemEntities : ObjectContext
     {
         #region Constructors
     
         /// <summary>
-        /// Initializes a new DBContainer object using the connection string found in the 'DBContainer' section of the application configuration file.
+        /// Initializes a new benchmarksystemEntities object using the connection string found in the 'benchmarksystemEntities' section of the application configuration file.
         /// </summary>
-        public DBContainer() : base("name=DBContainer", "DBContainer")
+        public benchmarksystemEntities() : base("name=benchmarksystemEntities", "benchmarksystemEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new DBContainer object.
+        /// Initialize a new benchmarksystemEntities object.
         /// </summary>
-        public DBContainer(string connectionString) : base(connectionString, "DBContainer")
+        public benchmarksystemEntities(string connectionString) : base(connectionString, "benchmarksystemEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
     
         /// <summary>
-        /// Initialize a new DBContainer object.
+        /// Initialize a new benchmarksystemEntities object.
         /// </summary>
-        public DBContainer(EntityConnection connection) : base(connection, "DBContainer")
+        public benchmarksystemEntities(EntityConnection connection) : base(connection, "benchmarksystemEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
@@ -63,9 +70,710 @@ namespace BenchmarkSystem
     
         #endregion
     
+        #region ObjectSet Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<job> jobs
+        {
+            get
+            {
+                if ((_jobs == null))
+                {
+                    _jobs = base.CreateObjectSet<job>("jobs");
+                }
+                return _jobs;
+            }
+        }
+        private ObjectSet<job> _jobs;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<jobs_has_jobstate> jobs_has_jobstate
+        {
+            get
+            {
+                if ((_jobs_has_jobstate == null))
+                {
+                    _jobs_has_jobstate = base.CreateObjectSet<jobs_has_jobstate>("jobs_has_jobstate");
+                }
+                return _jobs_has_jobstate;
+            }
+        }
+        private ObjectSet<jobs_has_jobstate> _jobs_has_jobstate;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<jobstate> jobstates
+        {
+            get
+            {
+                if ((_jobstates == null))
+                {
+                    _jobstates = base.CreateObjectSet<jobstate>("jobstates");
+                }
+                return _jobstates;
+            }
+        }
+        private ObjectSet<jobstate> _jobstates;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<owner> owners
+        {
+            get
+            {
+                if ((_owners == null))
+                {
+                    _owners = base.CreateObjectSet<owner>("owners");
+                }
+                return _owners;
+            }
+        }
+        private ObjectSet<owner> _owners;
+
+        #endregion
+        #region AddTo Methods
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the jobs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTojobs(job job)
+        {
+            base.AddObject("jobs", job);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the jobs_has_jobstate EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTojobs_has_jobstate(jobs_has_jobstate jobs_has_jobstate)
+        {
+            base.AddObject("jobs_has_jobstate", jobs_has_jobstate);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the jobstates EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTojobstates(jobstate jobstate)
+        {
+            base.AddObject("jobstates", jobstate);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the owners EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToowners(owner owner)
+        {
+            base.AddObject("owners", owner);
+        }
+
+        #endregion
+    }
+    
+
+    #endregion
+    
+    #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="benchmarksystemModel", Name="job")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class job : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new job object.
+        /// </summary>
+        /// <param name="jobID">Initial value of the JobID property.</param>
+        /// <param name="cPU">Initial value of the CPU property.</param>
+        /// <param name="expectedRuntime">Initial value of the ExpectedRuntime property.</param>
+        /// <param name="owners_OwnerID">Initial value of the Owners_OwnerID property.</param>
+        public static job Createjob(global::System.Int32 jobID, global::System.SByte cPU, global::System.Int32 expectedRuntime, global::System.Int32 owners_OwnerID)
+        {
+            job job = new job();
+            job.JobID = jobID;
+            job.CPU = cPU;
+            job.ExpectedRuntime = expectedRuntime;
+            job.Owners_OwnerID = owners_OwnerID;
+            return job;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 JobID
+        {
+            get
+            {
+                return _JobID;
+            }
+            set
+            {
+                if (_JobID != value)
+                {
+                    OnJobIDChanging(value);
+                    ReportPropertyChanging("JobID");
+                    _JobID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("JobID");
+                    OnJobIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _JobID;
+        partial void OnJobIDChanging(global::System.Int32 value);
+        partial void OnJobIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.SByte CPU
+        {
+            get
+            {
+                return _CPU;
+            }
+            set
+            {
+                OnCPUChanging(value);
+                ReportPropertyChanging("CPU");
+                _CPU = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CPU");
+                OnCPUChanged();
+            }
+        }
+        private global::System.SByte _CPU;
+        partial void OnCPUChanging(global::System.SByte value);
+        partial void OnCPUChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ExpectedRuntime
+        {
+            get
+            {
+                return _ExpectedRuntime;
+            }
+            set
+            {
+                OnExpectedRuntimeChanging(value);
+                ReportPropertyChanging("ExpectedRuntime");
+                _ExpectedRuntime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExpectedRuntime");
+                OnExpectedRuntimeChanged();
+            }
+        }
+        private global::System.Int32 _ExpectedRuntime;
+        partial void OnExpectedRuntimeChanging(global::System.Int32 value);
+        partial void OnExpectedRuntimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Owners_OwnerID
+        {
+            get
+            {
+                return _Owners_OwnerID;
+            }
+            set
+            {
+                OnOwners_OwnerIDChanging(value);
+                ReportPropertyChanging("Owners_OwnerID");
+                _Owners_OwnerID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Owners_OwnerID");
+                OnOwners_OwnerIDChanged();
+            }
+        }
+        private global::System.Int32 _Owners_OwnerID;
+        partial void OnOwners_OwnerIDChanging(global::System.Int32 value);
+        partial void OnOwners_OwnerIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("benchmarksystemModel", "fk_Jobs_has_JobState_Jobs1", "jobs_has_jobstate")]
+        public EntityCollection<jobs_has_jobstate> jobs_has_jobstate
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<jobs_has_jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_Jobs1", "jobs_has_jobstate");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<jobs_has_jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_Jobs1", "jobs_has_jobstate", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("benchmarksystemModel", "fk_Jobs_Owners", "owners")]
+        public owner owner
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<owner>("benchmarksystemModel.fk_Jobs_Owners", "owners").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<owner>("benchmarksystemModel.fk_Jobs_Owners", "owners").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<owner> ownerReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<owner>("benchmarksystemModel.fk_Jobs_Owners", "owners");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<owner>("benchmarksystemModel.fk_Jobs_Owners", "owners", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="benchmarksystemModel", Name="jobs_has_jobstate")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class jobs_has_jobstate : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new jobs_has_jobstate object.
+        /// </summary>
+        /// <param name="jobs_JobID">Initial value of the Jobs_JobID property.</param>
+        /// <param name="jobState_JobStateID">Initial value of the JobState_JobStateID property.</param>
+        /// <param name="timestamp">Initial value of the Timestamp property.</param>
+        public static jobs_has_jobstate Createjobs_has_jobstate(global::System.Int32 jobs_JobID, global::System.Int32 jobState_JobStateID, global::System.DateTimeOffset timestamp)
+        {
+            jobs_has_jobstate jobs_has_jobstate = new jobs_has_jobstate();
+            jobs_has_jobstate.Jobs_JobID = jobs_JobID;
+            jobs_has_jobstate.JobState_JobStateID = jobState_JobStateID;
+            jobs_has_jobstate.Timestamp = timestamp;
+            return jobs_has_jobstate;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 Jobs_JobID
+        {
+            get
+            {
+                return _Jobs_JobID;
+            }
+            set
+            {
+                if (_Jobs_JobID != value)
+                {
+                    OnJobs_JobIDChanging(value);
+                    ReportPropertyChanging("Jobs_JobID");
+                    _Jobs_JobID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("Jobs_JobID");
+                    OnJobs_JobIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _Jobs_JobID;
+        partial void OnJobs_JobIDChanging(global::System.Int32 value);
+        partial void OnJobs_JobIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 JobState_JobStateID
+        {
+            get
+            {
+                return _JobState_JobStateID;
+            }
+            set
+            {
+                if (_JobState_JobStateID != value)
+                {
+                    OnJobState_JobStateIDChanging(value);
+                    ReportPropertyChanging("JobState_JobStateID");
+                    _JobState_JobStateID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("JobState_JobStateID");
+                    OnJobState_JobStateIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _JobState_JobStateID;
+        partial void OnJobState_JobStateIDChanging(global::System.Int32 value);
+        partial void OnJobState_JobStateIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTimeOffset Timestamp
+        {
+            get
+            {
+                return _Timestamp;
+            }
+            set
+            {
+                OnTimestampChanging(value);
+                ReportPropertyChanging("Timestamp");
+                _Timestamp = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Timestamp");
+                OnTimestampChanged();
+            }
+        }
+        private global::System.DateTimeOffset _Timestamp;
+        partial void OnTimestampChanging(global::System.DateTimeOffset value);
+        partial void OnTimestampChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("benchmarksystemModel", "fk_Jobs_has_JobState_Jobs1", "jobs")]
+        public job job
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<job>("benchmarksystemModel.fk_Jobs_has_JobState_Jobs1", "jobs").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<job>("benchmarksystemModel.fk_Jobs_has_JobState_Jobs1", "jobs").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<job> jobReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<job>("benchmarksystemModel.fk_Jobs_has_JobState_Jobs1", "jobs");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<job>("benchmarksystemModel.fk_Jobs_has_JobState_Jobs1", "jobs", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("benchmarksystemModel", "fk_Jobs_has_JobState_JobState1", "jobstate")]
+        public jobstate jobstate
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_JobState1", "jobstate").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_JobState1", "jobstate").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<jobstate> jobstateReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_JobState1", "jobstate");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_JobState1", "jobstate", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="benchmarksystemModel", Name="jobstate")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class jobstate : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new jobstate object.
+        /// </summary>
+        /// <param name="jobStateID">Initial value of the JobStateID property.</param>
+        /// <param name="jobState1">Initial value of the JobState1 property.</param>
+        public static jobstate Createjobstate(global::System.Int32 jobStateID, global::System.String jobState1)
+        {
+            jobstate jobstate = new jobstate();
+            jobstate.JobStateID = jobStateID;
+            jobstate.JobState1 = jobState1;
+            return jobstate;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 JobStateID
+        {
+            get
+            {
+                return _JobStateID;
+            }
+            set
+            {
+                if (_JobStateID != value)
+                {
+                    OnJobStateIDChanging(value);
+                    ReportPropertyChanging("JobStateID");
+                    _JobStateID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("JobStateID");
+                    OnJobStateIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _JobStateID;
+        partial void OnJobStateIDChanging(global::System.Int32 value);
+        partial void OnJobStateIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String JobState1
+        {
+            get
+            {
+                return _JobState1;
+            }
+            set
+            {
+                OnJobState1Changing(value);
+                ReportPropertyChanging("JobState1");
+                _JobState1 = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("JobState1");
+                OnJobState1Changed();
+            }
+        }
+        private global::System.String _JobState1;
+        partial void OnJobState1Changing(global::System.String value);
+        partial void OnJobState1Changed();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("benchmarksystemModel", "fk_Jobs_has_JobState_JobState1", "jobs_has_jobstate")]
+        public EntityCollection<jobs_has_jobstate> jobs_has_jobstate
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<jobs_has_jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_JobState1", "jobs_has_jobstate");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<jobs_has_jobstate>("benchmarksystemModel.fk_Jobs_has_JobState_JobState1", "jobs_has_jobstate", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="benchmarksystemModel", Name="owner")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class owner : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new owner object.
+        /// </summary>
+        /// <param name="ownerID">Initial value of the OwnerID property.</param>
+        public static owner Createowner(global::System.Int32 ownerID)
+        {
+            owner owner = new owner();
+            owner.OwnerID = ownerID;
+            return owner;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 OwnerID
+        {
+            get
+            {
+                return _OwnerID;
+            }
+            set
+            {
+                if (_OwnerID != value)
+                {
+                    OnOwnerIDChanging(value);
+                    ReportPropertyChanging("OwnerID");
+                    _OwnerID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("OwnerID");
+                    OnOwnerIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _OwnerID;
+        partial void OnOwnerIDChanging(global::System.Int32 value);
+        partial void OnOwnerIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("benchmarksystemModel", "fk_Jobs_Owners", "jobs")]
+        public EntityCollection<job> jobs
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<job>("benchmarksystemModel.fk_Jobs_Owners", "jobs");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<job>("benchmarksystemModel.fk_Jobs_Owners", "jobs", value);
+                }
+            }
+        }
+
+        #endregion
     }
 
     #endregion
-
     
 }
