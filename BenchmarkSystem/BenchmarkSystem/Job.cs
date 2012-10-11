@@ -19,10 +19,11 @@ namespace BenchmarkSystemNs {
       this.ExpectedRuntime = ExpectedRuntime;
       State = JobState.Created;
     }
+    public uint id { get; set; }
     /// <summary>
     /// Owner of this job.
     /// </summary>
-    public Owner owner {
+    public virtual Owner owner {
       get;
       set;
     }
@@ -88,7 +89,7 @@ namespace BenchmarkSystemNs {
   /// <summary>
   /// Enum descriping the state of the Job.
   /// </summary>
-  enum JobState {
+  public enum JobState {
     Created,
     Queued,
     Running,
