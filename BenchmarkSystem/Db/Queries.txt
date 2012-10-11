@@ -1,0 +1,8 @@
+# JobState
+# JobStateID int, JobState varchar
+INSERT INTO jobstate VALUES
+(0, "Created"),
+(1, "Queued"),
+(2, "Running"),
+(3, "Succesfull"),
+(4, "Failed");
