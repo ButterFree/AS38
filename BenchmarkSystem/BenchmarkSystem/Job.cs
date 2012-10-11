@@ -19,7 +19,7 @@ namespace BenchmarkSystemNs {
       this.ExpectedRuntime = ExpectedRuntime;
       State = JobState.Created;
     }
-    public uint id { get; set; }
+    public int id { get; set; }
     /// <summary>
     /// Owner of this job.
     /// </summary>

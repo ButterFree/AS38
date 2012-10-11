@@ -11,7 +11,7 @@ namespace BenchmarkSystemNs {
     public Owner(string Name) {
       this.Name = Name;
     }
-
+    public int id { get; set; }
     public string Name {
       get;
       set;
