@@ -11,7 +11,7 @@ namespace BenchmarkSystemNs {
     /// <param name="owner">Owner for class</param>
     /// <param name="CPU">Number of threads</param>
     /// <param name="ExpectedRuntime">Expected runtime</param>
-    public Job(Owner owner, byte CPU, uint ExpectedRuntime) {
+    public Job(Owner owner, byte CPU, float ExpectedRuntime) {
       if (CPU > 10) throw new ArgumentOutOfRangeException("No more than 10 CPU's available. Tried to add job with: " + CPU);
       if (CPU < 1) throw new ArgumentOutOfRangeException("No less than 1 CPU. Tried to add job with: " + CPU);
       this.owner = owner;
@@ -41,7 +41,7 @@ namespace BenchmarkSystemNs {
     /// </summary>
     //TODO: Add unit
     //TODO: 0 is okay?
-    public uint ExpectedRuntime {
+    public float ExpectedRuntime {
       get;
       set;
     }

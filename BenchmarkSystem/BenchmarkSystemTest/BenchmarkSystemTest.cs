@@ -265,7 +265,6 @@ namespace BenchmarkSystemTest {
       Job job = new Job(null, 1, 1);
       job.process = (a) => {
         throw new Exception("Test exception");
-        return "";
       };
       target.Submit(job);
       target.ExecuteAll();

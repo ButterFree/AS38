@@ -22,6 +22,13 @@ namespace BenchmarkSystemNs {
     // Number of jobs running for each JobType
     Dictionary<Scheduler.JobType, byte> running = new Dictionary<Scheduler.JobType, byte>();
 
+    private uint _CPU = 30;
+    public uint CPU{
+        get { return _CPU; }
+        set{_CPU = value;}
+    }
+
+    private uint CPUInUse = 0;
     /// <summary>
     /// Private constructor. This class is a singleton.
     /// </summary>
