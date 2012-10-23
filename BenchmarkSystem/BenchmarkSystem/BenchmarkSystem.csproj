@@ -8,8 +8,8 @@
     <ProjectGuid>{0981D114-0627-4714-8809-9AF2276F8AC4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BenchmarkSystem</RootNamespace>
-    <AssemblyName>BenchmarkSystem</AssemblyName>
+    <RootNamespace>BenchmarkSystemNs</RootNamespace>
+    <AssemblyName>BenchmarkSystemNs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
