@@ -87,11 +87,12 @@ namespace BenchmarkSystemNs {
     /// </summary>
     public void ExecuteAll() {
       Job nextJob = null;
-      while ((nextJob = scheduler.PopJob()) != null) {
+      while ((nextJob = scheduler.PopJob(CPU-CPUInUse)) != null) {
         string[] args = { "" };
         nextJob.State = JobState.Running;
         running[Scheduler.GetJobType(nextJob)]++;
         OnJobStarted(nextJob);
+        CPUInUse += nextJob.CPU;
         try {
           nextJob.process(args);
           nextJob.State = JobState.Succesfull;
@@ -101,6 +102,7 @@ namespace BenchmarkSystemNs {
           OnJobFailed(nextJob, e);
         }
         running[Scheduler.GetJobType(nextJob)]--;
+        CPUInUse -= nextJob.CPU;
       }
     }
 

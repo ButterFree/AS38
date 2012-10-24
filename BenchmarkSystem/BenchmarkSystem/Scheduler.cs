@@ -57,7 +57,7 @@ namespace BenchmarkSystemNs {
     /// Get the next job from the internal queues.
     /// </summary>
     /// <returns></returns>
-    public Job PopJob() {
+    public Job PopJob(uint maxCPU) {
       Job jobToRun = null;
       IList<Job> inList = null;
       foreach (IList<Job> list in jobs.Values) {
