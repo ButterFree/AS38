@@ -17,9 +17,11 @@ namespace ConsoleSimulation {
       c.Database.CreateIfNotExists();
 
       int id = 0;
+      long timestamp = System.DateTime.Now.Ticks;
+      Owner me = new Owner("Test");
       while (true) {
           for (int i = 1; i <= 10; i++) {
-              Owner me = new Owner("Test" + (int)random.Next(100));
+              //Owner me = new Owner("Test" + (int)random.Next(100));
               Job job = new Job("ConsoleJob"+id++, me, (byte)(random.Next(9)+1), (float)(random.NextDouble()*4.9+0.1));
               job.process = (a) =>
               {

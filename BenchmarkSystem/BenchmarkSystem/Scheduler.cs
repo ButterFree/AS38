@@ -8,7 +8,7 @@ namespace BenchmarkSystemNs {
   /// <summary>
   /// Scheduler holds the job queues.
   /// </summary>
-  class Scheduler {
+  public class Scheduler {
 
     /// <summary>
     /// JobType is used to descripe the queue and the jobs within the queue.

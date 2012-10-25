@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 
 namespace BenchmarkSystemNs {
-  static class DatabaseFunctions {
+  public static class DatabaseFunctions {
 
     public static Job.JobState GetJobstate(Job job) {
       var query = from a in BenchmarkSystem.db.Activities
@@ -34,7 +34,7 @@ namespace BenchmarkSystemNs {
     }
     public static IList<Job> GetJobs(Owner User) {
       var query = from j in BenchmarkSystem.db.Jobs
-                  where j.owner.Equals(User)
+                  where j.owner.Name == User.Name
                   select j;
       return query.ToList();
     }
@@ -43,13 +43,16 @@ namespace BenchmarkSystemNs {
       minDate.AddDays(-DaysAgoMax);
       long minTimestamp = minDate.Ticks;
       var query = from j in BenchmarkSystem.db.Jobs
-                  where j.owner.Equals(User) && j.timestamp > minTimestamp
+                  where j.owner.Name == User.Name && j.timestamp > minTimestamp
                   select j;
       return query.ToList();
     }
     public static IList<Job> GetJobs(Owner User, uint StartTimestamp, uint EndTimestamp) {
       var query = from j in BenchmarkSystem.db.Jobs
-                  where j.owner.Equals(User) && j.timestamp > StartTimestamp && j.timestamp < EndTimestamp
+                  join a in BenchmarkSystem.db.Activities on j equals a.Job
+                  where j.owner.Name == User.Name &&
+                        j.timestamp > StartTimestamp && j.timestamp < EndTimestamp &&
+                        a.Timestamp < EndTimestamp
                   select j;
       return query.ToList();
     }
