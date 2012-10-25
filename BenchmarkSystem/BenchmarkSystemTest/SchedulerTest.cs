@@ -68,7 +68,7 @@ namespace BenchmarkSystemTest {
       Scheduler target = new Scheduler();
       Job job = new Job(owner, 6, 100);
       target.AddJob(job);
-      Job job2 = target.PopJob();
+      Job job2 = target.PopJob(30);
       Assert.AreSame(job, job2);
     }
 
@@ -103,7 +103,7 @@ namespace BenchmarkSystemTest {
       target.AddJob(job2);
 
       Job expected = job1;
-      Job actual = target.PopJob();
+      Job actual = target.PopJob(30);
       Assert.AreEqual(expected, actual);
     }
 
@@ -116,7 +116,7 @@ namespace BenchmarkSystemTest {
       Job job = new Job(owner, 4, 23);
       target.AddJob(job);
       target.RemoveJob(job);
-      Assert.IsNull(target.PopJob());
+      Assert.IsNull(target.PopJob(30));
     }
 
     /// <summary>

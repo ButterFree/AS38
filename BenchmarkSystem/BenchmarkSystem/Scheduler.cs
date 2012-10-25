@@ -57,7 +57,7 @@ namespace BenchmarkSystemNs {
     /// Get the next job from the internal queues.
     /// </summary>
     /// <returns></returns>
-    public Job PopJob() {
+    public Job PopJob(uint maxCPU) {
       Job jobToRun = null;
       IList<Job> inList = null;
       foreach (IList<Job> list in jobs.Values) {
@@ -83,12 +83,14 @@ namespace BenchmarkSystemNs {
     /// <param name="job">Job</param>
     /// <returns>JobType</returns>
     public static JobType GetJobType(Job job) {
-      if (job.ExpectedRuntime < 30) {
+      if (job.ExpectedRuntime > 0.1 && job.ExpectedRuntime <= 0.5) {
         return JobType.Short;
-      } else if (job.ExpectedRuntime >= 30 && job.ExpectedRuntime < 120) {
+      } else if (job.ExpectedRuntime > 0.5 && job.ExpectedRuntime <= 2) {
         return JobType.Long;
+      } else if (job.ExpectedRuntime > 2 && job.ExpectedRuntime <= 5) {
+          return JobType.VeryLong;
       } else {
-        return JobType.VeryLong;
+          throw new ArgumentException("ExpectedRuntime should be between 0.1 and 5");
       }
     }
 

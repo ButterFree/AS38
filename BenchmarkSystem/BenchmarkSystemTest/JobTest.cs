@@ -153,8 +153,8 @@ namespace BenchmarkSystemTest {
       byte CPU = 1;
       uint ExpectedRuntime = 0;
       Job target = new Job(owner, CPU, ExpectedRuntime);
-      uint expected = 0;
-      uint actual;
+      float expected = 0;
+      float actual;
       target.ExpectedRuntime = expected;
       actual = target.ExpectedRuntime;
       Assert.AreEqual(expected, actual);
@@ -169,8 +169,8 @@ namespace BenchmarkSystemTest {
       byte CPU = 1;
       uint ExpectedRuntime = 200;
       Job target = new Job(owner, CPU, ExpectedRuntime);
-      uint expected = 200;
-      uint actual;
+      float expected = 200;
+      float actual;
       target.ExpectedRuntime = expected;
       actual = target.ExpectedRuntime;
       Assert.AreEqual(expected, actual);

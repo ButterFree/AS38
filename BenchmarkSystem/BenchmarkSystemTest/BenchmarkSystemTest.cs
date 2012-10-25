@@ -77,6 +77,7 @@ namespace BenchmarkSystemTest {
     ///</summary>
     [TestMethod()]
     public void ExecuteAllTest() {
+        
       BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
       Job job1 = new Job(owner, 2, 20);
       Job job2 = new Job(owner, 4, 40);
@@ -264,7 +265,6 @@ namespace BenchmarkSystemTest {
       Job job = new Job(null, 1, 1);
       job.process = (a) => {
         throw new Exception("Test exception");
-        return "";
       };
       target.Submit(job);
       target.ExecuteAll();

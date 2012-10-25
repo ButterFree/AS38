@@ -22,6 +22,13 @@ namespace BenchmarkSystemNs {
     // Number of jobs running for each JobType
     Dictionary<Scheduler.JobType, byte> running = new Dictionary<Scheduler.JobType, byte>();
 
+    private uint _CPU = 30;
+    public uint CPU{
+        get { return _CPU; }
+        set{_CPU = value;}
+    }
+
+    private uint CPUInUse = 0;
     /// <summary>
     /// Private constructor. This class is a singleton.
     /// </summary>
@@ -80,11 +87,12 @@ namespace BenchmarkSystemNs {
     /// </summary>
     public void ExecuteAll() {
       Job nextJob = null;
-      while ((nextJob = scheduler.PopJob()) != null) {
+      while ((nextJob = scheduler.PopJob(CPU-CPUInUse)) != null) {
         string[] args = { "" };
         nextJob.State = JobState.Running;
         running[Scheduler.GetJobType(nextJob)]++;
         OnJobStarted(nextJob);
+        CPUInUse += nextJob.CPU;
         try {
           nextJob.process(args);
           nextJob.State = JobState.Succesfull;
@@ -94,6 +102,7 @@ namespace BenchmarkSystemNs {
           OnJobFailed(nextJob, e);
         }
         running[Scheduler.GetJobType(nextJob)]--;
+        CPUInUse -= nextJob.CPU;
       }
     }
 

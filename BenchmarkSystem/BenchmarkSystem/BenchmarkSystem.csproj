@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BenchmarkSystemNs</RootNamespace>
-    <AssemblyName>BenchmarkSystem</AssemblyName>
+    <AssemblyName>BenchmarkSystemNs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
@@ -46,7 +46,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+=======
+    <Reference Include="EntityFramework">
+>>>>>>> 07d5199615a00cc9cc5bb6b5a6f31e9c597103fd
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -77,6 +81,7 @@
     <Compile Include="Scheduler.cs" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <EntityDeploy Include="DbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DbModel.Designer.cs</LastGenOutput>
@@ -126,6 +131,10 @@
       <ProductName>Windows Installer 4.5</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+=======
+    <None Include="App.Config" />
+    <None Include="packages.config" />
+>>>>>>> 07d5199615a00cc9cc5bb6b5a6f31e9c597103fd
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
