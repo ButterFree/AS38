@@ -42,7 +42,7 @@ namespace BenchmarkSystemNs {
       JobFailed += new EventHandler<JobEventArgs>(benchmarkSystem_end);
 
       // Initialize keys
-      foreach (Scheduler.JobType type in Enum.GetValues(typeof(Scheduler.JobType))) {
+      foreach (Scheduler.JobType type in Scheduler.JobType.getTypes()) {
         running.Add(type, 0);
       }
     }
@@ -90,16 +90,16 @@ namespace BenchmarkSystemNs {
       Job nextJob = null;
       while ((nextJob = scheduler.PopJob(CPU-CPUInUse)) != null) {
         string[] args = { "" };
-        nextJob.State = JobState.Running;
+        nextJob.State = Job.JobState.Running;
         running[Scheduler.GetJobType(nextJob)]++;
         OnJobStarted(nextJob);
         CPUInUse += nextJob.CPU;
         try {
           nextJob.process(args);
-          nextJob.State = JobState.Succesfull;
+          nextJob.State = Job.JobState.Succesfull;
           OnJobTerminated(nextJob);
         } catch (Exception e) {
-          nextJob.State = JobState.Failed;
+          nextJob.State = Job.JobState.Failed;
           OnJobFailed(nextJob, e);
         }
         running[Scheduler.GetJobType(nextJob)]--;
@@ -161,26 +161,5 @@ namespace BenchmarkSystemNs {
     private void benchmarkSystem_end(object sender, JobEventArgs e) {
       running[Scheduler.GetJobType(e.job)]--;
     }
-
-    #region DatabaseFunction
-    public IList<Owner> GetAllUsers() {
-      return new List<Owner>();
-    }
-    public IList<Job> GetJobs(Owner User) {
-      return new List<Job>();
-    }
-    public IList<Job> GetJobs(Owner User, uint DaysAgoMax) {
-      return new List<Job>();
-    }
-    public IList<Job> GetJobs(Owner User, uint StartTimestamp, uint EndTimestamp) {
-      return new List<Job>();
-    }
-    public IDictionary<JobState, IList<Job>> GetGroupedJobs(uint StartTimestamp, uint EndTimestamp) {
-      return new Dictionary<JobState, IList<Job>>();
-    }
-    public IDictionary<JobState, IList<Job>> GetGroupedJobs(Owner owner, uint StartTimestamp, uint EndTimestamp) {
-      return new Dictionary<JobState, IList<Job>>();
-    }
-    #endregion
   }
 }

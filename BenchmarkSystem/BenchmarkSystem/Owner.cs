@@ -12,6 +12,7 @@ namespace BenchmarkSystemNs {
     public Owner(string Name) {
       this.Name = Name;
     }
+    public Owner() { }
     [Key]
     public int id { get; set; }
     public string Name {

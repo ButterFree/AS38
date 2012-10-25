@@ -16,6 +16,7 @@ namespace BenchmarkSystemTest {
 
     private TestContext testContextInstance;
     private Owner owner = new Owner("Testuser");
+    private JobContext db = new JobContext();
 
     /// <summary>
     ///Gets or sets the test context which provides
@@ -65,7 +66,7 @@ namespace BenchmarkSystemTest {
     ///</summary>
     [TestMethod()]
     public void AddJobTest() {
-      Scheduler target = new Scheduler();
+      Scheduler target = new Scheduler(db);
       Job job = new Job(owner, 6, 100);
       target.AddJob(job);
       Job job2 = target.PopJob(30);
@@ -97,7 +98,7 @@ namespace BenchmarkSystemTest {
     public void PopJobTest() {
       Job job1 = new Job(owner, 6, 100);
       Job job2 = new Job(owner, 1, 26);
-      Scheduler target = new Scheduler();
+      Scheduler target = new Scheduler(db);
       target.AddJob(job1);
       System.Threading.Thread.Sleep(1);
       target.AddJob(job2);
@@ -112,7 +113,7 @@ namespace BenchmarkSystemTest {
     ///</summary>
     [TestMethod()]
     public void RemoveJobTest() {
-      Scheduler target = new Scheduler();
+      Scheduler target = new Scheduler(db);
       Job job = new Job(owner, 4, 23);
       target.AddJob(job);
       target.RemoveJob(job);
@@ -124,7 +125,7 @@ namespace BenchmarkSystemTest {
     ///</summary>
     [TestMethod()]
     public void ToStringTest() {
-      Scheduler target = new Scheduler();
+      Scheduler target = new Scheduler(db);
       Job job1 = new Job(owner, 3, 12);
       Job job2 = new Job(owner, 6, 11);
       Assert.IsInstanceOfType(target.ToString(), typeof(string));
@@ -135,7 +136,7 @@ namespace BenchmarkSystemTest {
     /// </summary>
     [TestMethod()]
     public void ContainsTest() {
-      Scheduler target = new Scheduler();
+      Scheduler target = new Scheduler(db);
 
       // Add jobs and assert
       uint max = 10;
@@ -158,7 +159,7 @@ namespace BenchmarkSystemTest {
     /// </summary>
     [TestMethod()]
     public void TotalNumberOfJobsTest() {
-      Scheduler target = new Scheduler();
+      Scheduler target = new Scheduler(db);
 
       // Add jobs and assert
       uint max = 10;

@@ -5,34 +5,38 @@ using System.Linq;
 using System.Text;
 
 namespace BenchmarkSystemNs {
-  class DatabaseFunctions {
-    private DbContext db;
+  static class DatabaseFunctions {
 
-    public DatabaseFunctions(DbContext db) {
-      this.db = db;
+    public static IList<Job> GetJobs(JobContext db) {
+      var query = from j in db.Jobs
+                  orderby j.timestamp ascending
+                  select j;
+      return query.ToList();
     }
-
-    public Job getOldestJobOfType(Scheduler.JobType type) {
-      return new Job(new Owner("dav"), 1, 1);
+    public static IList<Job> GetJobs(JobContext db, Scheduler.JobType type) {
+      var query = from j in db.Jobs
+                  where j.ExpectedRuntime > type.MinRuntime && j.ExpectedRuntime < type.MaxRuntime
+                  orderby j.timestamp ascending
+                  select j;
+      return query.ToList();
     }
-
-    public IList<Owner> GetAllUsers() {
+    public static IList<Owner> GetAllUsers() {
       return new List<Owner>();
     }
-    public IList<Job> GetJobs(Owner User) {
+    public static IList<Job> GetJobs(JobContext db, Owner User) {
       return new List<Job>();
     }
-    public IList<Job> GetJobs(Owner User, uint DaysAgoMax) {
+    public static IList<Job> GetJobs(JobContext db, Owner User, uint DaysAgoMax) {
       return new List<Job>();
     }
-    public IList<Job> GetJobs(Owner User, uint StartTimestamp, uint EndTimestamp) {
+    public static IList<Job> GetJobs(JobContext db, Owner User, uint StartTimestamp, uint EndTimestamp) {
       return new List<Job>();
     }
-    public IDictionary<JobState, IList<Job>> GetGroupedJobs(uint StartTimestamp, uint EndTimestamp) {
-      return new Dictionary<JobState, IList<Job>>();
+    public static IDictionary<Job.JobState, IList<Job>> GetGroupedJobs(JobContext db, uint StartTimestamp, uint EndTimestamp) {
+      return new Dictionary<Job.JobState, IList<Job>>();
     }
-    public IDictionary<JobState, IList<Job>> GetGroupedJobs(Owner owner, uint StartTimestamp, uint EndTimestamp) {
-      return new Dictionary<JobState, IList<Job>>();
+    public static IDictionary<Job.JobState, IList<Job>> GetGroupedJobs(JobContext db, Owner owner, uint StartTimestamp, uint EndTimestamp) {
+      return new Dictionary<Job.JobState, IList<Job>>();
     }
 
   }

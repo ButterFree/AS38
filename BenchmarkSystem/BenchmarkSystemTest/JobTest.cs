@@ -185,8 +185,8 @@ namespace BenchmarkSystemTest {
       byte CPU = 1;
       uint ExpectedRuntime = 0;
       Job target = new Job(owner, CPU, ExpectedRuntime);
-      JobState expected = JobState.Created;
-      JobState actual;
+      Job.JobState expected = Job.JobState.Created;
+      Job.JobState actual;
       target.State = expected;
       actual = target.State;
       Assert.AreEqual(expected, actual);
@@ -201,8 +201,8 @@ namespace BenchmarkSystemTest {
       byte CPU = 1;
       uint ExpectedRuntime = 0;
       Job target = new Job(owner, CPU, ExpectedRuntime);
-      JobState expected = JobState.Queued;
-      JobState actual;
+      Job.JobState expected = Job.JobState.Queued;
+      Job.JobState actual;
       target.State = expected;
       actual = target.State;
       Assert.AreEqual(expected, actual);
@@ -217,10 +217,10 @@ namespace BenchmarkSystemTest {
       byte CPU = 1;
       uint ExpectedRuntime = 0;
       Job target = new Job(owner, CPU, ExpectedRuntime);
-      JobState expected = JobState.Queued;
-      JobState shouldfail;
+      Job.JobState expected = Job.JobState.Queued;
+      Job.JobState shouldfail;
       target.State = expected;
-      shouldfail = JobState.Running;
+      shouldfail = Job.JobState.Running;
       Assert.AreNotEqual(expected, shouldfail);
     }
 

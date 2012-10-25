@@ -20,6 +20,7 @@ namespace BenchmarkSystemNs {
       this.ExpectedRuntime = ExpectedRuntime;
       State = JobState.Created;
     }
+    public Job() {}
     [Key]
     public int id { get; set; }
     /// <summary>
@@ -86,16 +87,15 @@ namespace BenchmarkSystemNs {
     public override string ToString() {
       return "(" + timestamp + ")Job: [ID=" + id + "owner=" + owner.Name + ",CPU=" + CPU + "ExpectedRuntime=" + ExpectedRuntime + "] - " + State;
     }
+    /// <summary>
+    /// Enum descriping the state of the Job.
+    /// </summary>
+    public enum JobState {
+      Created,
+      Queued,
+      Running,
+      Succesfull,
+      Failed
+    }
   }
-
-  /// <summary>
-  /// Enum descriping the state of the Job.
-  /// </summary>
-  public enum JobState {
-    Created,
-    Queued,
-    Running,
-    Succesfull,
-    Failed
-  };
 }
