@@ -67,7 +67,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("TimestampTest", owner, CPU, ExpectedRuntime);
       target.SetTimestamp();
       long time = System.DateTime.Now.Millisecond;
       long dif = time - target.timestamp;
@@ -82,7 +82,7 @@ namespace BenchmarkSystemTest {
       Owner owner = new Owner("Test owner");
       byte CPU = 3;
       uint ExpectedRuntime = 42;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("Constructor test", owner, CPU, ExpectedRuntime);
       Assert.AreEqual(owner, target.owner);
       Assert.AreEqual(CPU, target.CPU);
       Assert.AreEqual(ExpectedRuntime, target.ExpectedRuntime);
@@ -96,7 +96,7 @@ namespace BenchmarkSystemTest {
       Owner owner = new Owner("Test owner");
       byte CPU = 3;
       uint ExpectedRuntime = 42;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("ToString Test", owner, CPU, ExpectedRuntime);
       string actual = target.ToString();
       Assert.IsTrue(target.ToString().Contains(owner.Name));
       Assert.IsTrue(target.ToString().Contains("42"));
@@ -112,7 +112,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 3;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("CPU Test", owner, CPU, ExpectedRuntime);
       byte expected = 3;
       byte actual;
       target.CPU = expected;
@@ -129,7 +129,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 0;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("CPU Test 0", owner, CPU, ExpectedRuntime);
     }
 
     /// <summary>
@@ -141,7 +141,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 255;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("CPU Test 255", owner, CPU, ExpectedRuntime);
     }
 
     /// <summary>
@@ -152,7 +152,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("ExpectedRuntime Test 0", owner, CPU, ExpectedRuntime);
       float expected = 0;
       float actual;
       target.ExpectedRuntime = expected;
@@ -168,7 +168,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 1;
       uint ExpectedRuntime = 200;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("ExpectedRuntime Test 200", owner, CPU, ExpectedRuntime);
       float expected = 200;
       float actual;
       target.ExpectedRuntime = expected;
@@ -184,7 +184,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("State test", owner, CPU, ExpectedRuntime);
       Job.JobState expected = Job.JobState.Created;
       Job.JobState actual;
       target.State = expected;
@@ -200,7 +200,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("State test 2", owner, CPU, ExpectedRuntime);
       Job.JobState expected = Job.JobState.Queued;
       Job.JobState actual;
       target.State = expected;
@@ -216,7 +216,7 @@ namespace BenchmarkSystemTest {
       Owner owner = null;
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("State test 3", owner, CPU, ExpectedRuntime);
       Job.JobState expected = Job.JobState.Queued;
       Job.JobState shouldfail;
       target.State = expected;
@@ -232,7 +232,7 @@ namespace BenchmarkSystemTest {
       Owner owner = new Owner("Test owner");
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("Owner test", owner, CPU, ExpectedRuntime);
       Owner expected = new Owner("Test owner");
       Owner actual;
       target.owner = expected;
@@ -248,7 +248,7 @@ namespace BenchmarkSystemTest {
       Owner owner = new Owner("Some owner");
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("Owner test 2", owner, CPU, ExpectedRuntime);
       Owner expected = new Owner("Some owner");
       Owner actual;
       target.owner = expected;
@@ -264,7 +264,7 @@ namespace BenchmarkSystemTest {
       Owner owner = new Owner("Some owner");
       byte CPU = 1;
       uint ExpectedRuntime = 0;
-      Job target = new Job(owner, CPU, ExpectedRuntime);
+      Job target = new Job("Owner Test 3", owner, CPU, ExpectedRuntime);
       Owner shouldfail = new Owner("Test owner");
       Owner actual;
       actual = target.owner;
@@ -295,7 +295,7 @@ namespace BenchmarkSystemTest {
     [TestMethod()]
     [DeploymentItem("BenchmarkSystem.dll")]
     public void timestampTest() {
-      PrivateObject param0 = new PrivateObject(new Job(null, 1, 20));
+      PrivateObject param0 = new PrivateObject(new Job("Timestamp test", null, 1, 20));
       Job_Accessor target = new Job_Accessor(param0);
       long expected = 20;
       long actual;
@@ -310,7 +310,7 @@ namespace BenchmarkSystemTest {
     [TestMethod()]
     [DeploymentItem("BenchmarkSystem.dll")]
     public void timestampTest2() {
-      PrivateObject param0 = new PrivateObject(new Job(null, 1, 20));
+      PrivateObject param0 = new PrivateObject(new Job("Timestamp test 2", null, 1, 20));
       Job_Accessor target = new Job_Accessor(param0);
       long expected = 2000;
       long actual;

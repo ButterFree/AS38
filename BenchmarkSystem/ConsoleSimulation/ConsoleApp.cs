@@ -4,31 +4,31 @@ using System.Linq;
 using System.Text;
 using BenchmarkSystemNs;
 using System.Threading;
+using System.Data.Entity;
 
 namespace ConsoleSimulation {
   class ConsoleApp {
     static void Main(string[] args) {
-      Owner me = new Owner("Test");
-      BenchmarkSystem system = BenchmarkSystem.instance;
       Random random = new Random();
+      BenchmarkSystem system = BenchmarkSystem.instance;
+
+      Database.SetInitializer<JobContext>(new DropCreateDatabaseAlways<JobContext>());
       JobContext c = new JobContext();
       c.Database.CreateIfNotExists();
-        
+
       int id = 0;
       while (true) {
           for (int i = 1; i <= 10; i++) {
-              Job job = new Job(me, (byte)(random.Next(9)+1), (float)(random.NextDouble()*4.9+0.1));
-              job.id = id;
-              int value = id;
+              Owner me = new Owner("Test" + (int)random.Next(100));
+              Job job = new Job("ConsoleJob"+id++, me, (byte)(random.Next(9)+1), (float)(random.NextDouble()*4.9+0.1));
               job.process = (a) =>
               {
-                  Console.WriteLine("Job" + value + " runs and runs");
+                  Console.WriteLine("Job "+job.name+" runs and runs");
                   Thread.Sleep(random.Next(5) * 1000);
-                  Console.WriteLine("Job" + value + "finished");
+                  Console.WriteLine("Job " + job.name + " finished");
                   return "";
               };
               system.Submit(job);
-              id++;
           }
 
           Console.WriteLine("Status: ");

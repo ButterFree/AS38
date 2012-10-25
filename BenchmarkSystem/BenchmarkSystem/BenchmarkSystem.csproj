@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BenchmarkSystem.cs" />
+    <Compile Include="Activity.cs" />
     <Compile Include="DatabaseFunctions.cs" />
     <Compile Include="Contexts.cs" />
     <Compile Include="Job.cs" />

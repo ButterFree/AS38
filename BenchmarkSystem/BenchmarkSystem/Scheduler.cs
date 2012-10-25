@@ -10,12 +10,6 @@ namespace BenchmarkSystemNs {
   /// </summary>
   class Scheduler {
 
-    JobContext db;
-
-    public Scheduler(JobContext db) {
-      this.db = db;
-    }
-
     /// <summary>
     /// JobType is used to descripe the queue and the jobs within the queue.
     /// </summary>
@@ -52,8 +46,6 @@ namespace BenchmarkSystemNs {
       // Set timestamp to keep track of when this job was added to a queue
       job.SetTimestamp();
       job.State = Job.JobState.Queued;
-      db.Jobs.Add(job);
-      db.SaveChanges();
     }
 
     /// <summary>
@@ -61,8 +53,8 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <param name="job"></param>
     public void RemoveJob(Job job) {
-      db.Jobs.Remove(job);
-      db.SaveChanges();
+      //BenchmarkSystem.db.Jobs.
+      //db.SaveChanges();
     }
 
     /// <summary>
@@ -72,14 +64,14 @@ namespace BenchmarkSystemNs {
     public Job PopJob(uint maxCPU) {
       Job jobToRun = null;
       foreach (JobType type in JobType.getTypes()) {
-        IList<Job> jobs = DatabaseFunctions.GetJobs(db, type);
+        IList<Job> jobs = DatabaseFunctions.GetJobs(type, Job.JobState.Queued);
         Job OldestJob = null;
         if (jobs.Count > 0) OldestJob = jobs[0];
         if (OldestJob != null && (jobToRun == null || OldestJob.timestamp < jobToRun.timestamp)) {
           jobToRun = OldestJob;
         }
       }
-      if (jobToRun != null) RemoveJob(jobToRun);
+      //if (jobToRun != null) RemoveJob(jobToRun);
       return jobToRun;
     }
 
@@ -94,7 +86,7 @@ namespace BenchmarkSystemNs {
       foreach (JobType type in JobType.getTypes()) {
         if (job.ExpectedRuntime > type.MinRuntime && job.ExpectedRuntime < type.MaxRuntime) return type;
       }
-      throw new ArgumentException("ExpectedRuntime should be between 0.1 and 5");
+      throw new ArgumentException("No jobtype found for the job");
     }
 
     /// <summary>
@@ -105,8 +97,8 @@ namespace BenchmarkSystemNs {
     public override string ToString() {
       StringBuilder str = new StringBuilder();
       foreach (JobType type in JobType.getTypes()) {
-        str.AppendLine(type + ": " + DatabaseFunctions.GetJobs(db, type).Count() + " jobs");
-        foreach (Job job in DatabaseFunctions.GetJobs(db, type)) {
+        str.AppendLine(type + ": " + DatabaseFunctions.GetJobs(type, Job.JobState.Queued).Count() + " jobs");
+        foreach (Job job in DatabaseFunctions.GetJobs(type, Job.JobState.Queued)) {
           str.AppendLine(job.ToString());
         }
       }
@@ -118,7 +110,7 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <returns>uint total number of jobs</returns>
     public uint TotalNumberOfJobs() {
-      return (uint)DatabaseFunctions.GetJobs(db).Count();
+      return (uint)DatabaseFunctions.GetJobs().Count();
     }
 
     /// <summary>

@@ -14,7 +14,6 @@ namespace BenchmarkSystemNs {
     }
     public Owner() { }
     [Key]
-    public int id { get; set; }
     public string Name {
       get;
       set;
