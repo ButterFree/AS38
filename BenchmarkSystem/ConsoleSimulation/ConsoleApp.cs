@@ -11,6 +11,8 @@ namespace ConsoleSimulation {
       Owner me = new Owner("Test");
       BenchmarkSystem system = BenchmarkSystem.instance;
       Random random = new Random();
+      JobContext c = new JobContext();
+      c.Database.CreateIfNotExists();
         
       int id = 0;
       while (true) {
