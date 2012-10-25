@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace BenchmarkSystemNs {
   public class Job {
@@ -19,6 +20,8 @@ namespace BenchmarkSystemNs {
       this.ExpectedRuntime = ExpectedRuntime;
       State = JobState.Created;
     }
+    [Key]
+    public int id { get; set; }
     /// <summary>
     /// Owner of this job.
     /// </summary>

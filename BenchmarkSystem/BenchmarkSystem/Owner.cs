@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace BenchmarkSystemNs {
   /// <summary>
@@ -11,7 +12,8 @@ namespace BenchmarkSystemNs {
     public Owner(string Name) {
       this.Name = Name;
     }
-
+    [Key]
+    public int id { get; set; }
     public string Name {
       get;
       set;

@@ -39,7 +39,10 @@ namespace BenchmarkSystemNs {
       // Set timestamp to keep track of when this job was added to a queue
       job.SetTimestamp();
       job.State = JobState.Queued;
-      jobs[GetJobType(job)].Add(job);
+      using (var db = new JobContext()) {
+        db.Jobs.Add(job);
+        db.SaveChanges();
+      }
     }
 
     /// <summary>
