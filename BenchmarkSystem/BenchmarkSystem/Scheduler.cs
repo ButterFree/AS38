@@ -9,6 +9,12 @@ namespace BenchmarkSystemNs {
   /// </summary>
   class Scheduler {
 
+    JobContext db;
+
+    public Scheduler(JobContext db) {
+      this.db = db;
+    }
+
     /// <summary>
     /// JobType is used to descripe the queue and the jobs within the queue.
     /// </summary>
@@ -16,19 +22,6 @@ namespace BenchmarkSystemNs {
       Short,
       Long,
       VeryLong
-    }
-
-    // A list of jobs per JobType
-    private Dictionary<JobType, IList<Job>> jobs = new Dictionary<JobType, IList<Job>>();
-
-    /// <summary>
-    /// Constructor for Scheduler.
-    /// </summary>
-    public Scheduler() {
-      // Initialize Dictionary of jobs
-      foreach (JobType type in Enum.GetValues(typeof(JobType))) {
-        jobs.Add(type, new List<Job>());
-      }
     }
 
     /// <summary>
@@ -39,10 +32,8 @@ namespace BenchmarkSystemNs {
       // Set timestamp to keep track of when this job was added to a queue
       job.SetTimestamp();
       job.State = JobState.Queued;
-      using (var db = new JobContext()) {
-        db.Jobs.Add(job);
-        db.SaveChanges();
-      }
+      db.Jobs.Add(job);
+      db.SaveChanges();
     }
 
     /// <summary>
@@ -50,7 +41,8 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <param name="job"></param>
     public void RemoveJob(Job job) {
-      jobs[GetJobType(job)].Remove(job);
+      db.Jobs.Remove(job);
+      db.SaveChanges();
     }
 
     /// <summary>

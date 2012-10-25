@@ -21,6 +21,7 @@ namespace BenchmarkSystemNs {
     private Scheduler scheduler;
     // Number of jobs running for each JobType
     Dictionary<Scheduler.JobType, byte> running = new Dictionary<Scheduler.JobType, byte>();
+    JobContext db = new JobContext();
 
     private uint _CPU = 30;
     public uint CPU{
@@ -33,7 +34,7 @@ namespace BenchmarkSystemNs {
     /// Private constructor. This class is a singleton.
     /// </summary>
     private BenchmarkSystem() {
-      scheduler = new Scheduler();
+      scheduler = new Scheduler(db);
       // Add events
       // These are used to keep track of number of jobs running
       JobStarted += new EventHandler<JobEventArgs>(benchmarkSystem_start);
