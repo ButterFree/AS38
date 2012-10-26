@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace BenchmarkSystemNs {
   /// <summary>
@@ -100,27 +101,32 @@ namespace BenchmarkSystemNs {
       return str.ToString();
     }
 
+    private void Execute(Job job) {
+      
+        job.State = Job.JobState.Running;
+        running[Scheduler.GetJobType(job)]++;
+        OnJobStarted(job);
+        CPUInUse += job.CPU;
+        try {
+          string[] args = { "" };
+          job.process.BeginInvoke(null, null, null);
+          job.State = Job.JobState.Succesfull;
+          OnJobTerminated(job);
+        } catch (Exception e) {
+          job.State = Job.JobState.Failed;
+          OnJobFailed(job, e);
+        }
+        running[Scheduler.GetJobType(job)]--;
+        CPUInUse -= job.CPU;
+    }
+
     /// <summary>
     /// This method will run jobs from the job queues.
     /// </summary>
     public void ExecuteAll() {
       Job nextJob = null;
       while ((nextJob = scheduler.PopJob(CPU-CPUInUse)) != null) {
-        string[] args = { "" };
-        nextJob.State = Job.JobState.Running;
-        running[Scheduler.GetJobType(nextJob)]++;
-        OnJobStarted(nextJob);
-        CPUInUse += nextJob.CPU;
-        try {
-          nextJob.process(args);
-          nextJob.State = Job.JobState.Succesfull;
-          OnJobTerminated(nextJob);
-        } catch (Exception e) {
-          nextJob.State = Job.JobState.Failed;
-          OnJobFailed(nextJob, e);
-        }
-        running[Scheduler.GetJobType(nextJob)]--;
-        CPUInUse -= nextJob.CPU;
+        Execute(nextJob);
       }
     }
 
