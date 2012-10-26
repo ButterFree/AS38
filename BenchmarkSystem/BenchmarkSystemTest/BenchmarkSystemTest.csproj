@@ -46,6 +46,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
@@ -55,7 +57,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityTest.cs" />
     <Compile Include="BenchmarkSystemTest.cs" />
+    <Compile Include="DatabaseFunctionsTest.cs" />
     <Compile Include="JobEventArgsTest.cs" />
     <Compile Include="JobTest.cs" />
     <Compile Include="OwnerTest.cs" />
