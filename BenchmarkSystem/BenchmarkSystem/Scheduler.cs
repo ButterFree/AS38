@@ -53,8 +53,8 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <param name="job"></param>
     public void RemoveJob(Job job) {
-      //BenchmarkSystem.db.Jobs.
-      //db.SaveChanges();
+      job.State = Job.JobState.Failed;
+      BenchmarkSystem.db.SaveChanges();
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ namespace BenchmarkSystemNs {
     /// <returns>JobType</returns>
     public static JobType GetJobType(Job job) {
       foreach (JobType type in JobType.getTypes()) {
-        if (job.ExpectedRuntime > type.MinRuntime && job.ExpectedRuntime < type.MaxRuntime) return type;
+        if (job.ExpectedRuntime >= type.MinRuntime && job.ExpectedRuntime <= type.MaxRuntime) return type;
       }
       throw new ArgumentException("No jobtype found for the job");
     }
@@ -110,7 +110,7 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <returns>uint total number of jobs</returns>
     public uint TotalNumberOfJobs() {
-      return (uint)DatabaseFunctions.GetJobs().Count();
+      return (uint)DatabaseFunctions.GetJobs(Job.JobState.Queued).Count();
     }
 
     /// <summary>
@@ -119,14 +119,7 @@ namespace BenchmarkSystemNs {
     /// <param name="job">Job</param>
     /// <returns>bool contains job</returns>
     public bool Contains(Job job) {
-      bool contains = false;
-      foreach (IList<Job> list in JobType.getTypes()) {
-        if (list.Contains(job)) {
-          contains = true;
-          break;
-        }
-      }
-      return contains;
+      return DatabaseFunctions.JobExists(job, Job.JobState.Queued);
     }
   }
 }

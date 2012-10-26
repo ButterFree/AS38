@@ -58,6 +58,11 @@ namespace BenchmarkSystemTest {
     //
     #endregion
 
+    [TestInitialize]
+    public void TestInitialize() {
+      BenchmarkSystem.db = null;
+    }
+
     /// <summary>
     ///A test for Remove
     ///</summary>
@@ -79,11 +84,11 @@ namespace BenchmarkSystemTest {
     public void ExecuteAllTest() {
         
       BenchmarkSystem_Accessor target = new BenchmarkSystem_Accessor(); // TODO: Initialize to an appropriate value
-      Job job1 = new Job("ExecuteAll Test 1", owner, 2, 20);
-      Job job2 = new Job("ExecuteAll Test 2", owner, 4, 40);
-      Job job3 = new Job("ExecuteAll Test 3", owner, 6, 60);
-      Job job4 = new Job("ExecuteAll Test 4", owner, 5, 80);
-      Job job5 = new Job("ExecuteAll Test 5", owner, 3, 100);
+      Job job1 = new Job("ExecuteAll Test 1", owner, 2, (float)0.1);
+      Job job2 = new Job("ExecuteAll Test 2", owner, 4, (float)1.0);
+      Job job3 = new Job("ExecuteAll Test 3", owner, 6, (float)2.0);
+      Job job4 = new Job("ExecuteAll Test 4", owner, 5, (float)3.0);
+      Job job5 = new Job("ExecuteAll Test 5", owner, 3, (float)4.0);
       target.Submit(job1);
       target.Submit(job2);
       target.Submit(job3);
@@ -113,7 +118,7 @@ namespace BenchmarkSystemTest {
     ///A test for OnJobFailed
     ///</summary>
     [TestMethod()]
-    public void OnJobFailedTest() {
+    public void OnJobFailedTest() { 
       EventCalledBool = false;
       BenchmarkSystem target = BenchmarkSystem.instance;
       target.JobFailed += new EventHandler<JobEventArgs>(EventCalled);

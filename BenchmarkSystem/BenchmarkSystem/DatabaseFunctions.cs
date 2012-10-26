@@ -14,15 +14,22 @@ namespace BenchmarkSystemNs {
                   select a;
       return query.First().State;
     }
-    public static IList<Job> GetJobs() {
+    public static bool JobExists(Job job, Job.JobState State) {
       var query = from j in BenchmarkSystem.db.Jobs
+                  where j.name == job.name && j.DbState == (int)State
+                  select j;
+      return (query.Count() > 0);
+    }
+    public static IList<Job> GetJobs(Job.JobState State) {
+      var query = from j in BenchmarkSystem.db.Jobs
+                  where j.DbState == (int)State
                   orderby j.timestamp ascending
                   select j;
       return query.ToList();
     }
     public static IList<Job> GetJobs(Scheduler.JobType type, Job.JobState State) {
       var query = from j in BenchmarkSystem.db.Jobs
-                  where j.ExpectedRuntime > type.MinRuntime && j.ExpectedRuntime < type.MaxRuntime && j.DbState == (int)State
+                  where j.ExpectedRuntime >= type.MinRuntime && j.ExpectedRuntime <= type.MaxRuntime && j.DbState == (int)State
                   orderby j.timestamp ascending
                   select j;
       return query.ToList();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 
@@ -21,7 +22,20 @@ namespace BenchmarkSystemNs {
     private Scheduler scheduler;
     // Number of jobs running for each JobType
     Dictionary<Scheduler.JobType, byte> running = new Dictionary<Scheduler.JobType, byte>();
-    public static JobContext db = new JobContext();
+    private static JobContext _db;
+    public static JobContext db {
+      get {
+        if (_db == null) {
+          Database.SetInitializer<JobContext>(new DropCreateDatabaseAlways<JobContext>());
+          _db = new JobContext();
+          _db.Database.Initialize(force: true);
+        }
+        return _db;
+      }
+      set {
+        _db = value;
+      }
+    }
 
     private uint _CPU = 30;
     public uint CPU{
@@ -46,9 +60,9 @@ namespace BenchmarkSystemNs {
         running.Add(type, 0);
       }
     }
-    ~BenchmarkSystem() {
+    /*~BenchmarkSystem() {
       db.Dispose();
-    }
+    }*/
 
     /// <summary>
     /// Add a job. The job will be added to the Scheduler

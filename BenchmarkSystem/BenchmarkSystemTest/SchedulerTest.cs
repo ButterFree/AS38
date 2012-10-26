@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace BenchmarkSystemTest {
 
@@ -15,7 +16,8 @@ namespace BenchmarkSystemTest {
 
 
     private TestContext testContextInstance;
-    private Owner owner = new Owner("Testuser");
+    private static int userId = 0;
+    Owner owner = new Owner("Testuser");
 
     /// <summary>
     ///Gets or sets the test context which provides
@@ -60,15 +62,22 @@ namespace BenchmarkSystemTest {
     //
     #endregion
 
+    [TestInitialize]
+    public void TestInitialize() {
+      BenchmarkSystem bs = BenchmarkSystem.instance;
+      BenchmarkSystem.db = null;
+    }
+
     /// <summary>
     ///A test for AddJob
     ///</summary>
     [TestMethod()]
     public void AddJobTest() {
+      Owner owner = new Owner("Testuser"+userId++);
       Scheduler target = new Scheduler();
-      Job job = new Job("AddJob Test", owner, 6, 100);
+      Job job = new Job("AddJob Test", owner, 6, 4);
       target.AddJob(job);
-      Job job2 = target.PopJob(30);
+     Job job2 = target.PopJob(30);
       Assert.AreSame(job, job2);
     }
 
@@ -78,12 +87,12 @@ namespace BenchmarkSystemTest {
     [TestMethod()]
     public void GetJobTypeTest() {
       Dictionary<Job, Scheduler.JobType> testCases = new Dictionary<Job, Scheduler.JobType>();
-      testCases.Add(new Job("GetJobType test 1", owner, 6, 1), Scheduler.JobType.Short);
-      testCases.Add(new Job("GetJobType test 2", owner, 6, 29), Scheduler.JobType.Short);
-      testCases.Add(new Job("GetJobType test 3", owner, 6, 30), Scheduler.JobType.Long);
-      testCases.Add(new Job("GetJobType test 4", owner, 6, 119), Scheduler.JobType.Long);
-      testCases.Add(new Job("GetJobType test 5", owner, 6, 120), Scheduler.JobType.VeryLong);
-      testCases.Add(new Job("GetJobType test 6", owner, 6, int.MaxValue), Scheduler.JobType.VeryLong);
+      testCases.Add(new Job("GetJobType test 1", owner, 6, (float)0.1), Scheduler.JobType.Short);
+      testCases.Add(new Job("GetJobType test 2", owner, 6, (float)0.5), Scheduler.JobType.Short);
+      testCases.Add(new Job("GetJobType test 3", owner, 6, (float)0.6), Scheduler.JobType.Long);
+      testCases.Add(new Job("GetJobType test 4", owner, 6, (float)2.0), Scheduler.JobType.Long);
+      testCases.Add(new Job("GetJobType test 5", owner, 6, (float)2.1), Scheduler.JobType.VeryLong);
+      testCases.Add(new Job("GetJobType test 6", owner, 6, (float)5.0), Scheduler.JobType.VeryLong);
       foreach (Job test in testCases.Keys) {
         Scheduler.JobType actual = Scheduler.GetJobType(test);
         Assert.AreEqual(testCases[test], actual);
@@ -95,8 +104,8 @@ namespace BenchmarkSystemTest {
     ///</summary>
     [TestMethod()]
     public void PopJobTest() {
-      Job job1 = new Job("PopJob test 1", owner, 6, 100);
-      Job job2 = new Job("PopJob test 2", owner, 1, 26);
+      Job job1 = new Job("PopJob test 1", owner, 6, (float)5.0);
+      Job job2 = new Job("PopJob test 2", owner, 1, (float)1.2);
       Scheduler target = new Scheduler();
       target.AddJob(job1);
       System.Threading.Thread.Sleep(1);
@@ -104,7 +113,7 @@ namespace BenchmarkSystemTest {
 
       Job expected = job1;
       Job actual = target.PopJob(30);
-      Assert.AreEqual(expected, actual);
+      Assert.AreEqual(expected.name, actual.name);
     }
 
     /// <summary>
@@ -113,7 +122,7 @@ namespace BenchmarkSystemTest {
     [TestMethod()]
     public void RemoveJobTest() {
       Scheduler target = new Scheduler();
-      Job job = new Job("RemoveJob test", owner, 4, 23);
+      Job job = new Job("RemoveJob test", owner, 4, (float)1.4);
       target.AddJob(job);
       target.RemoveJob(job);
       Assert.IsNull(target.PopJob(30));
@@ -125,8 +134,8 @@ namespace BenchmarkSystemTest {
     [TestMethod()]
     public void ToStringTest() {
       Scheduler target = new Scheduler();
-      Job job1 = new Job("ToString test 1", owner, 3, 12);
-      Job job2 = new Job("ToString test 2", owner, 6, 11);
+      Job job1 = new Job("ToString test 1", owner, 3, (float)0.2);
+      Job job2 = new Job("ToString test 2", owner, 6, (float)0.15);
       Assert.IsInstanceOfType(target.ToString(), typeof(string));
     }
 
@@ -141,7 +150,7 @@ namespace BenchmarkSystemTest {
       uint max = 10;
       Job[] jobs = new Job[max];
       for (uint i = 1; i <= max; i++) {
-        Job job = new Job("Contains test "+i, null, 1, i);
+        Job job = new Job("Contains test "+i, owner, 1, i/2);
         jobs[i - 1] = job;
         target.AddJob(job);
         Assert.IsTrue(target.Contains(job));
@@ -165,7 +174,7 @@ namespace BenchmarkSystemTest {
       Job[] jobs = new Job[max];
       Assert.AreEqual((uint)0, target.TotalNumberOfJobs());
       for (uint i = 1; i <= max; i++) {
-        Job job = new Job("TotalNumberOfJobs test"+i, null, 1, i);
+        Job job = new Job("TotalNumberOfJobs test"+i, owner, 1, i/2);
         jobs[i - 1] = job;
         target.AddJob(job);
         Assert.AreEqual(i, target.TotalNumberOfJobs());

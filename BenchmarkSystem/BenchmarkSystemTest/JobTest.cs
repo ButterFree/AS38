@@ -58,6 +58,10 @@ namespace BenchmarkSystemTest {
     //
     #endregion
 
+    [TestInitialize]
+    public void TestInitialize() {
+      BenchmarkSystem.db = null;
+    }
 
     /// <summary>
     ///A test for SetTimestamp
@@ -113,11 +117,7 @@ namespace BenchmarkSystemTest {
       byte CPU = 3;
       uint ExpectedRuntime = 0;
       Job target = new Job("CPU Test", owner, CPU, ExpectedRuntime);
-      byte expected = 3;
-      byte actual;
-      target.CPU = expected;
-      actual = target.CPU;
-      Assert.AreEqual(expected, actual);
+      Assert.AreEqual(CPU, target.CPU);
     }
 
     /// <summary>
@@ -130,6 +130,7 @@ namespace BenchmarkSystemTest {
       byte CPU = 0;
       uint ExpectedRuntime = 0;
       Job target = new Job("CPU Test 0", owner, CPU, ExpectedRuntime);
+      Assert.AreEqual(CPU, target.CPU);
     }
 
     /// <summary>
@@ -142,6 +143,7 @@ namespace BenchmarkSystemTest {
       byte CPU = 255;
       uint ExpectedRuntime = 0;
       Job target = new Job("CPU Test 255", owner, CPU, ExpectedRuntime);
+      Assert.AreEqual(CPU, target.CPU);
     }
 
     /// <summary>

@@ -59,6 +59,10 @@ namespace BenchmarkSystemTest {
     //
     #endregion
 
+    [TestInitialize]
+    public void TestInitialize() {
+      BenchmarkSystem.db = null;
+    }
 
     /// <summary>
     ///A test for JobEventArgs Constructor
