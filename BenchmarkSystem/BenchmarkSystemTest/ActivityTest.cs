@@ -65,11 +65,15 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void ActivityConstructorTest() {
-      Job Job = null; // TODO: Initialize to an appropriate value
-      Job.JobState State = new Job.JobState(); // TODO: Initialize to an appropriate value
-      long Timestamp = 0; // TODO: Initialize to an appropriate value
-      Activity target = new Activity(Job, State, Timestamp);
-      Assert.Inconclusive("TODO: Implement code to verify target");
+      Owner owner = new Owner("Activity Testowner");
+      Job job = new Job("Activity Testjob", owner, 5, 3);
+      Job.JobState state = Job.JobState.Queued;
+      long timestamp = System.DateTime.Now.Ticks;
+      Activity ac = new Activity(job, state, timestamp);
+      Assert.AreEqual(job, ac.Job);
+      Assert.AreEqual(state, ac.State);
+      Assert.AreEqual((int)state, ac.DbState);
+      Assert.AreEqual(timestamp, ac.Timestamp);
     }
 
     /// <summary>
@@ -77,67 +81,9 @@ namespace BenchmarkSystemTest
     ///</summary>
     [TestMethod()]
     public void DbStateTest() {
-      Job Job = null; // TODO: Initialize to an appropriate value
-      Job.JobState State = new Job.JobState(); // TODO: Initialize to an appropriate value
-      long Timestamp = 0; // TODO: Initialize to an appropriate value
-      Activity target = new Activity(Job, State, Timestamp); // TODO: Initialize to an appropriate value
-      int expected = 0; // TODO: Initialize to an appropriate value
-      int actual;
-      target.DbState = expected;
-      actual = target.DbState;
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
-    }
-
-    /// <summary>
-    ///A test for Job
-    ///</summary>
-    [TestMethod()]
-    public void JobTest() {
-      Job Job = null; // TODO: Initialize to an appropriate value
-      Job.JobState State = new Job.JobState(); // TODO: Initialize to an appropriate value
-      long Timestamp = 0; // TODO: Initialize to an appropriate value
-      Activity target = new Activity(Job, State, Timestamp); // TODO: Initialize to an appropriate value
-      Job expected = null; // TODO: Initialize to an appropriate value
-      Job actual;
-      target.Job = expected;
-      actual = target.Job;
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
-    }
-
-    /// <summary>
-    ///A test for State
-    ///</summary>
-    [TestMethod()]
-    public void StateTest() {
-      Job Job = null; // TODO: Initialize to an appropriate value
-      Job.JobState State = new Job.JobState(); // TODO: Initialize to an appropriate value
-      long Timestamp = 0; // TODO: Initialize to an appropriate value
-      Activity target = new Activity(Job, State, Timestamp); // TODO: Initialize to an appropriate value
-      Job.JobState expected = new Job.JobState(); // TODO: Initialize to an appropriate value
-      Job.JobState actual;
-      target.State = expected;
-      actual = target.State;
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
-    }
-
-    /// <summary>
-    ///A test for Timestamp
-    ///</summary>
-    [TestMethod()]
-    public void TimestampTest() {
-      Job Job = null; // TODO: Initialize to an appropriate value
-      Job.JobState State = new Job.JobState(); // TODO: Initialize to an appropriate value
-      long Timestamp = 0; // TODO: Initialize to an appropriate value
-      Activity target = new Activity(Job, State, Timestamp); // TODO: Initialize to an appropriate value
-      long expected = 0; // TODO: Initialize to an appropriate value
-      long actual;
-      target.Timestamp = expected;
-      actual = target.Timestamp;
-      Assert.AreEqual(expected, actual);
-      Assert.Inconclusive("Verify the correctness of this test method.");
+      Activity ac = new Activity(null, Job.JobState.Failed, 0);
+      ac.State = Job.JobState.Succesfull;
+      Assert.AreEqual((int)Job.JobState.Succesfull, ac.DbState);
     }
   }
 }

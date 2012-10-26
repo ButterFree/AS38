@@ -7,13 +7,6 @@ using System.Text;
 namespace BenchmarkSystemNs {
   public static class DatabaseFunctions {
 
-    public static Job.JobState GetJobstate(Job job) {
-      var query = from a in BenchmarkSystem.db.Activities
-                  where a.Job.Equals(job)
-                  orderby a.Timestamp
-                  select a;
-      return query.First().State;
-    }
     public static bool JobExists(Job job, Job.JobState State) {
       var query = from j in BenchmarkSystem.db.Jobs
                   where j.name == job.name && j.DbState == (int)State
@@ -47,34 +40,39 @@ namespace BenchmarkSystemNs {
     }
     public static IList<Job> GetJobs(Owner User, uint DaysAgoMax) {
       DateTime minDate = System.DateTime.Now;
-      minDate.AddDays(-DaysAgoMax);
+      minDate = minDate.AddDays(-DaysAgoMax);
       long minTimestamp = minDate.Ticks;
       var query = from j in BenchmarkSystem.db.Jobs
                   where j.owner.Name == User.Name && j.timestamp > minTimestamp
                   select j;
       return query.ToList();
     }
-    public static IList<Job> GetJobs(Owner User, uint StartTimestamp, uint EndTimestamp) {
+    public static IList<Job> GetJobs(Owner User, long StartTimestamp, long EndTimestamp) {
       var query = from j in BenchmarkSystem.db.Jobs
-                  join a in BenchmarkSystem.db.Activities on j equals a.Job
                   where j.owner.Name == User.Name &&
-                        j.timestamp > StartTimestamp && j.timestamp < EndTimestamp &&
-                        a.Timestamp < EndTimestamp
+                        j.timestamp >= StartTimestamp && j.timestamp <= EndTimestamp
                   select j;
       return query.ToList();
     }
-    public static IDictionary<Job.JobState, IList<Job>> GetGroupedJobs(uint StartTimestamp, uint EndTimestamp) {
+    public static IDictionary<Job.JobState, IList<Job>> GetGroupedJobs(long StartTimestamp, long EndTimestamp) {
       Dictionary<Job.JobState, IList<Job>> jobs = new Dictionary<Job.JobState, IList<Job>>();
-      foreach (Scheduler.JobType type in Scheduler.JobType.getTypes()) {
+      foreach (Job.JobState state in Enum.GetValues(typeof(Job.JobState))) {
         var query = from j in BenchmarkSystem.db.Jobs
-                    where j.ExpectedRuntime > type.MinRuntime && j.ExpectedRuntime < type.MaxRuntime && j.timestamp > StartTimestamp && j.timestamp < EndTimestamp
+                    where j.DbState == (int)state && j.timestamp >= StartTimestamp && j.timestamp <= EndTimestamp
                     select j;
-
+        jobs.Add(state, query.ToList());
       }
-      return new Dictionary<Job.JobState, IList<Job>>();
+      return jobs;
     }
-    public static IDictionary<Job.JobState, IList<Job>> GetGroupedJobs(Owner owner, uint StartTimestamp, uint EndTimestamp) {
-      return new Dictionary<Job.JobState, IList<Job>>();
+    public static IDictionary<Job.JobState, IList<Job>> GetGroupedJobs(Owner owner, long StartTimestamp, long EndTimestamp) {
+      Dictionary<Job.JobState, IList<Job>> jobs = new Dictionary<Job.JobState, IList<Job>>();
+      foreach (Job.JobState state in Enum.GetValues(typeof(Job.JobState))) {
+        var query = from j in BenchmarkSystem.db.Jobs
+                    where j.DbState == (int)state && j.timestamp >= StartTimestamp && j.timestamp <= EndTimestamp && j.owner.Name == owner.Name
+                    select j;
+        jobs.Add(state, query.ToList());
+      }
+      return jobs;
     }
 
   }
