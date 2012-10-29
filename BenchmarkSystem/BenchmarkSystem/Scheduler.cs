@@ -64,11 +64,12 @@ namespace BenchmarkSystemNs {
     /// <returns></returns>
     public Job PopJob() {
       IList<Job> jobs = DatabaseFunctions.GetJobs(Job.JobState.Queued);
+      if (jobs.Count() <= 0) return null;
       Job JobToRun = null;
       int pos = 0;
       while (JobToRun == null) {
         uint maxCPU = BenchmarkSystem.instance.CPU - BenchmarkSystem.instance.CPUInUse;
-        if (pos >= jobs.Count()-1) pos = 0;
+        if (pos >= jobs.Count()) pos = 0;
         if (BenchmarkSystem.instance.running[GetJobType(jobs[pos])] < 20) {
           if (jobs[pos].CPU < maxCPU) {
             JobToRun = jobs[pos];

@@ -173,7 +173,7 @@ namespace BenchmarkSystemTest {
     public void GetJobsTest1_1() {
       IList<Job> result = DatabaseFunctions.GetJobs(Scheduler.JobType.Short, Job.JobState.Queued);
       Assert.AreEqual(1, result.Count);
-      Assert.IsTrue(result.Contains(j1));
+      Assert.AreEqual(result[0], j1);
     }
 
     /// <summary>
@@ -183,7 +183,7 @@ namespace BenchmarkSystemTest {
     public void GetJobsTest1_2() {
       IList<Job> result = DatabaseFunctions.GetJobs(Scheduler.JobType.Long, Job.JobState.Queued);
       Assert.AreEqual(1, result.Count);
-      Assert.IsTrue(result.Contains(j5));
+      Assert.AreEqual(result[0], j5);
     }
 
     /// <summary>
@@ -193,13 +193,13 @@ namespace BenchmarkSystemTest {
     public void GetJobsTest1_3() {
       IList<Job> result = DatabaseFunctions.GetJobs(Scheduler.JobType.VeryLong, Job.JobState.Queued);
       Assert.AreEqual(7, result.Count);
-      Assert.IsTrue(result.Contains(j2));
-      Assert.IsTrue(result.Contains(j3));
-      Assert.IsTrue(result.Contains(j4));
-      Assert.IsTrue(result.Contains(j7));
-      Assert.IsTrue(result.Contains(j8));
-      Assert.IsTrue(result.Contains(j9));
-      Assert.IsTrue(result.Contains(j10));
+      Assert.AreEqual(result[0], j4);
+      Assert.AreEqual(result[1], j2);
+      Assert.AreEqual(result[2], j3);
+      Assert.AreEqual(result[3], j7);
+      Assert.AreEqual(result[4], j8);
+      Assert.AreEqual(result[5], j9);
+      Assert.AreEqual(result[6], j10);
     }
 
     /// <summary>
@@ -209,7 +209,7 @@ namespace BenchmarkSystemTest {
     public void GetJobsTest1_4() {
       IList<Job> result = DatabaseFunctions.GetJobs(Scheduler.JobType.VeryLong, Job.JobState.Failed);
       Assert.AreEqual(1, result.Count);
-      Assert.IsTrue(result.Contains(j6));
+      Assert.AreEqual(result[0], j6);
     }
 
     /// <summary>
@@ -243,7 +243,7 @@ namespace BenchmarkSystemTest {
     public void GetJobsTest4() {
       IList<Job> result = DatabaseFunctions.GetJobs(Job.JobState.Failed);
       Assert.AreEqual(1, result.Count);
-      Assert.IsTrue(result.Contains(j6));
+      Assert.AreEqual(result[0], j6);
     }
 
     /// <summary>

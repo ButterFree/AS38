@@ -223,7 +223,7 @@ namespace BenchmarkSystemTest {
       EventCalledBool = false;
       target.JobRemoved -= new EventHandler<JobEventArgs>(EventCalled);
     }
-
+    /* DOES NOT WORK WITH MULTITHREADING
     /// <summary>
     /// Does the correct event get called by the correct trigger
     /// </summary>
@@ -283,7 +283,7 @@ namespace BenchmarkSystemTest {
       EventCalledBool = false;
       target.JobFailed -= new EventHandler<JobEventArgs>(EventCalled);
     }
-
+    */
     /// <summary>
     /// Test the Contains-method
     /// </summary>
