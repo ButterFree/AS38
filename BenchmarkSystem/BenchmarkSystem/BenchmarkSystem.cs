@@ -38,19 +38,15 @@ namespace BenchmarkSystemNs {
       }
     }
 
-    private uint _CPU = 30;
-    public uint CPU{
-        get { return _CPU; }
-        set{_CPU = value;}
-    }
-
-    private uint CPUInUse = 0;
+    public uint CPU { get; set; }
+    public uint CPUInUse = 0;
     /// <summary>
     /// Private constructor. This class is a singleton.
     /// </summary>
     private BenchmarkSystem() {
       scheduler = new Scheduler();
       JobContext temp = BenchmarkSystem.db;
+      CPU = 30;
       // Add events
       // These are used to keep track of number of jobs running
       JobStarted += new EventHandler<JobEventArgs>(benchmarkSystem_start);
@@ -124,15 +120,13 @@ namespace BenchmarkSystemNs {
     public void ExecuteAll() {
       Job nextJob = null;
       while (TotalNumberOfJobs() > 0) {
-        lock (this) {
-          if ((nextJob = scheduler.PopJob(CPU - CPUInUse)) != null) {
-            ParameterizedThreadStart ts = new ParameterizedThreadStart(Execute);
-            Thread thread = new Thread(ts);
-            OnJobStarted(nextJob);
-            thread.Start(nextJob);
-          } else {
-            Thread.Sleep(200);
-          }
+        if ((nextJob = scheduler.PopJob()) != null) {
+          ParameterizedThreadStart ts = new ParameterizedThreadStart(Execute);
+          Thread thread = new Thread(ts);
+          OnJobStarted(nextJob);
+          thread.Start(nextJob);
+        } else {
+          Thread.Sleep(200);
         }
       }
     }
@@ -190,10 +184,8 @@ namespace BenchmarkSystemNs {
 
     // These are used to keep track of number of jobs running
     private void benchmarkSystem_end(object sender, JobEventArgs e) {
-      lock (this) {
-        this.CPUInUse -= e.job.CPU;
-        running[Scheduler.GetJobType(e.job)]--;
-      }
+      this.CPUInUse -= e.job.CPU;
+      running[Scheduler.GetJobType(e.job)]--;
     }
   }
 }
