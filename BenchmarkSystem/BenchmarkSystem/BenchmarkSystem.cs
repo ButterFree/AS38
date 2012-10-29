@@ -22,7 +22,7 @@ namespace BenchmarkSystemNs {
     // See Scheduler class
     private Scheduler scheduler;
     // Number of jobs running for each JobType
-    Dictionary<Scheduler.JobType, byte> running = new Dictionary<Scheduler.JobType, byte>();
+    public Dictionary<Scheduler.JobType, byte> running = new Dictionary<Scheduler.JobType, byte>();
     private static JobContext _db;
     public static JobContext db {
       get {
@@ -91,33 +91,30 @@ namespace BenchmarkSystemNs {
     /// <summary>
     /// Retuns status of the BenchmarkSystem as a string. This includes all jobs and their current state.
     /// </summary>
-    /// <returns>Status of the BecnhmarkSystem</returns>
+    /// <returns>Status of the BenchmarkSystem</returns>
     public string Status() {
       StringBuilder str = new StringBuilder();
-      foreach (Scheduler.JobType type in running.Keys) {
-        str.AppendLine(type + ": " + running[type] + "/20 running");
+      lock (this) {
+        foreach (Scheduler.JobType type in running.Keys) {
+          str.AppendLine(type + ": " + running[type] + "/20 running");
+        }
       }
       str.AppendLine(scheduler.ToString());
+      str.AppendLine(CPUInUse + "/" + CPU + " CPUs used");
       return str.ToString();
     }
-
-    private void Execute(Job job) {
-      
-        job.State = Job.JobState.Running;
-        running[Scheduler.GetJobType(job)]++;
-        OnJobStarted(job);
-        CPUInUse += job.CPU;
+    private void Execute(Object o) {
+      Job job = (Job)o;
         try {
           string[] args = { "" };
-          job.process.BeginInvoke(null, null, null);
+          job.State = Job.JobState.Running;
+          job.process(args);
           job.State = Job.JobState.Succesfull;
           OnJobTerminated(job);
         } catch (Exception e) {
           job.State = Job.JobState.Failed;
           OnJobFailed(job, e);
         }
-        running[Scheduler.GetJobType(job)]--;
-        CPUInUse -= job.CPU;
     }
 
     /// <summary>
@@ -125,8 +122,17 @@ namespace BenchmarkSystemNs {
     /// </summary>
     public void ExecuteAll() {
       Job nextJob = null;
-      while ((nextJob = scheduler.PopJob(CPU-CPUInUse)) != null) {
-        Execute(nextJob);
+      while (TotalNumberOfJobs() > 0) {
+        lock (this) {
+          if ((nextJob = scheduler.PopJob(CPU - CPUInUse)) != null) {
+            ParameterizedThreadStart ts = new ParameterizedThreadStart(Execute);
+            Thread thread = new Thread(ts);
+            OnJobStarted(nextJob);
+            thread.Start(nextJob);
+          } else {
+            Thread.Sleep(200);
+          }
+        }
       }
     }
 
@@ -177,12 +183,16 @@ namespace BenchmarkSystemNs {
 
     // These are used to keep track of number of jobs running
     private void benchmarkSystem_start(object sender, JobEventArgs e) {
+      this.CPUInUse += e.job.CPU;
       running[Scheduler.GetJobType(e.job)]++;
     }
 
     // These are used to keep track of number of jobs running
     private void benchmarkSystem_end(object sender, JobEventArgs e) {
-      running[Scheduler.GetJobType(e.job)]--;
+      lock (this) {
+        this.CPUInUse -= e.job.CPU;
+        running[Scheduler.GetJobType(e.job)]--;
+      }
     }
   }
 }

@@ -24,7 +24,9 @@ namespace BenchmarkSystemNs {
       BenchmarkSystem.db.Jobs.Add(this);
       Activity ac = new Activity(this, Job.JobState.Created, System.DateTime.Now.Ticks);
       BenchmarkSystem.db.Activities.Add(ac);
-      BenchmarkSystem.db.SaveChanges();
+      lock (BenchmarkSystem.db) {
+        BenchmarkSystem.db.SaveChanges();
+      }
     }
     public Job() {}
     [Key]
@@ -63,7 +65,9 @@ namespace BenchmarkSystemNs {
       get { return (Job.JobState)DbState; }
       set {
         DbState = (int)value;
-        BenchmarkSystem.db.SaveChanges();
+        lock (BenchmarkSystem.db) {
+          BenchmarkSystem.db.SaveChanges();
+        }
       }
     }
 
@@ -96,6 +100,13 @@ namespace BenchmarkSystemNs {
     /// <returns>String descriping this job</returns>
     public override string ToString() {
       return "(" + timestamp + ")Job: [name="+name+",owner=" + owner.Name + ",CPU=" + CPU + "ExpectedRuntime=" + ExpectedRuntime + "] - " + State;
+    }
+
+    [NotMapped]
+    private byte delayCount { get; set; }
+    public bool delay() {
+      if ((delayCount++) < 2) return true;
+      else return false;
     }
     /// <summary>
     /// Enum descriping the state of the Job.

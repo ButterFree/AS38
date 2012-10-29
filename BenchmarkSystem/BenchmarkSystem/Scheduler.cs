@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 
 namespace BenchmarkSystemNs {
   /// <summary>
@@ -62,17 +63,21 @@ namespace BenchmarkSystemNs {
     /// </summary>
     /// <returns></returns>
     public Job PopJob(uint maxCPU) {
-      Job jobToRun = null;
-      foreach (JobType type in JobType.getTypes()) {
-        IList<Job> jobs = DatabaseFunctions.GetJobs(type, Job.JobState.Queued);
-        Job OldestJob = null;
-        if (jobs.Count > 0) OldestJob = jobs[0];
-        if (OldestJob != null && (jobToRun == null || OldestJob.timestamp < jobToRun.timestamp)) {
-          jobToRun = OldestJob;
-        }
+      IList<Job> jobs = DatabaseFunctions.GetJobs(Job.JobState.Queued);
+      Job JobToRun = null;
+      int pos = 0;
+      while (JobToRun == null) {
+        if (pos >= jobs.Count()) pos = 0;
+        if (BenchmarkSystem.instance.running[GetJobType(jobs[pos])] < 20) {
+          if (jobs[pos].CPU < maxCPU) {
+            JobToRun = jobs[pos];
+          } else {
+            if (jobs[pos].delay()) pos++;
+            else Thread.Sleep(200);
+          }
+        } else continue;
       }
-      //if (jobToRun != null) RemoveJob(jobToRun);
-      return jobToRun;
+      return JobToRun;
     }
 
     /// <summary>
@@ -98,9 +103,9 @@ namespace BenchmarkSystemNs {
       StringBuilder str = new StringBuilder();
       foreach (JobType type in JobType.getTypes()) {
         str.AppendLine(type + ": " + DatabaseFunctions.GetJobs(type, Job.JobState.Queued).Count() + " jobs");
-        foreach (Job job in DatabaseFunctions.GetJobs(type, Job.JobState.Queued)) {
+        /*foreach (Job job in DatabaseFunctions.GetJobs(type, Job.JobState.Queued)) {
           str.AppendLine(job.ToString());
-        }
+        }*/
       }
       return str.ToString();
     }
