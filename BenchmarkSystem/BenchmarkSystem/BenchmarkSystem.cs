@@ -55,7 +55,7 @@ namespace BenchmarkSystemNs {
 
       // Initialize keys
       foreach (Scheduler.JobType type in Scheduler.JobType.getTypes()) {
-        running.Add(type, 0);
+        lock (running) running.Add(type, 0);
       }
     }
     /*~BenchmarkSystem() {
@@ -91,7 +91,7 @@ namespace BenchmarkSystemNs {
     /// <returns>Status of the BenchmarkSystem</returns>
     public string Status() {
       StringBuilder str = new StringBuilder();
-      lock (this) {
+      lock (running) {
         foreach (Scheduler.JobType type in running.Keys) {
           str.AppendLine(type + ": " + running[type] + "/20 running");
         }
@@ -179,13 +179,13 @@ namespace BenchmarkSystemNs {
     // These are used to keep track of number of jobs running
     private void benchmarkSystem_start(object sender, JobEventArgs e) {
       this.CPUInUse += e.job.CPU;
-      running[Scheduler.GetJobType(e.job)]++;
+      lock (running) running[Scheduler.GetJobType(e.job)]++;
     }
 
     // These are used to keep track of number of jobs running
     private void benchmarkSystem_end(object sender, JobEventArgs e) {
       this.CPUInUse -= e.job.CPU;
-      running[Scheduler.GetJobType(e.job)]--;
+      lock (running) running[Scheduler.GetJobType(e.job)]--;
     }
   }
 }

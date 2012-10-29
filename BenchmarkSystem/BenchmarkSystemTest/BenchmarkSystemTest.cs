@@ -199,6 +199,7 @@ namespace BenchmarkSystemTest {
       Job job = new Job("Queued test", null, 1, 1);
       EventCalledBool = false;
       target.Submit(job);
+      System.Threading.Thread.Sleep(1000);
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobQueued, eventType);
       EventCalledBool = false;
@@ -216,6 +217,7 @@ namespace BenchmarkSystemTest {
       target.Submit(job);
       EventCalledBool = false;
       target.Remove(job);
+      System.Threading.Thread.Sleep(1000);
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobRemoved, eventType);
       EventCalledBool = false;
@@ -233,6 +235,7 @@ namespace BenchmarkSystemTest {
       target.Submit(job);
       EventCalledBool = false;
       target.ExecuteAll();
+      System.Threading.Thread.Sleep(1000);
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobStarted, eventType);
       EventCalledBool = false;
@@ -253,6 +256,7 @@ namespace BenchmarkSystemTest {
       target.Submit(job);
       EventCalledBool = false;
       target.ExecuteAll();
+      System.Threading.Thread.Sleep(1000);
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobTerminated, eventType);
       EventCalledBool = false;
@@ -273,6 +277,7 @@ namespace BenchmarkSystemTest {
       };
       target.Submit(job);
       target.ExecuteAll();
+      System.Threading.Thread.Sleep(1000);
       Assert.IsTrue(EventCalledBool);
       Assert.AreEqual(JobEventArgs.EventType.JobFailed, eventType);
       EventCalledBool = false;
