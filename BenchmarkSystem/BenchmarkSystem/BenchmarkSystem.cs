@@ -50,6 +50,7 @@ namespace BenchmarkSystemNs {
     /// </summary>
     private BenchmarkSystem() {
       scheduler = new Scheduler();
+      JobContext temp = BenchmarkSystem.db;
       // Add events
       // These are used to keep track of number of jobs running
       JobStarted += new EventHandler<JobEventArgs>(benchmarkSystem_start);
